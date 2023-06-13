@@ -1,0 +1,47 @@
+//< " ФАЙЛ СТИЛЕЙ ФОРМ " >=============================================================================================================>//
+
+.field {
+
+	// .field__form
+
+	&__form {
+		flex: 1 1 100%;
+	}
+
+	// .field__item
+
+	&__item {
+		display: flex;
+		align-items: center;
+		flex: 1 1 100%;
+	}
+
+	// .field__input
+
+	&__input {
+		padding: 0px 15px;
+		flex: 1 1 100%;
+		@include adaptiv-value("min-height", 50, 40, 1);
+	}
+
+	// .field__btn
+
+	&__btn {
+		@include adaptiv-value("min-width", 50, 40, 1);
+		@include adaptiv-value("min-height", 50, 40, 1);
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		// background-color: ;
+
+		white-space: nowrap;
+
+		@media (any-hover: hover) {
+			// transition:  .2s ease .0s;
+
+			&:hover {
+				// background-color: ;
+			}
+		}
+	}
+}
