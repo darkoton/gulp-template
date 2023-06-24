@@ -74,3 +74,72 @@
 		transform: rotate(-45deg);
 	}
 }
+
+
+.gradient-button{
+  color: #fff;
+  position: relative;
+  background: transparent;
+  border-radius: 0 18px;
+  overflow: hidden;
+  z-index: 0;
+
+  &:before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    inset: 0;
+    background: linear-gradient(264.86deg, #D74037 2.29%, #E94A68 49.7%, #D735AC 68.56%);
+    padding: 2px;
+    // border-radius: 0 18px;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+  }
+  
+  &::after{
+    content: "";
+    background: linear-gradient(264.86deg, #D74037 2.29%, #E94A68 49.7%, #D735AC 68.56%);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;  
+    z-index: -1;
+    transition: all 0.3s ease 0s;
+  }
+
+  @media (any-hover:hover){
+    cursor: pointer;
+    transition: all 0.3s ease 0s;
+  &:hover{
+    &::after{
+      opacity: 1;
+    }
+  }
+  }
+  &._active{
+    &::after{
+      opacity: 1;
+    }
+  }
+}
+
+.gradient-text{
+  background: linear-gradient(to right, #fff, #fff, #fff, #D74037, #E94A68, #D735AC);  
+  background-clip: text;
+  background-size: 250% 500%;
+  -webkit-background-clip: text;
+  color: transparent;
+
+  @media (any-hover:hover){
+    cursor: pointer;
+    transition: all 0.3s ease 0s;
+    &:hover {
+      background-position-x: 100%;
+    }
+  }
+}
