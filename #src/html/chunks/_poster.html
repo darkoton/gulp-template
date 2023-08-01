@@ -1,0 +1,168 @@
+<section class='poster'>
+  <div class='poster__wrapper'>
+    <div class='poster__container _container'>
+      <div class='poster__body'>
+        <div class="poster__header section-header">
+          <h3 class="poster__header-button section-header__lead">Top “Manhattan” party</h3>
+
+          <h2 class="poster__title section-header__title">афиша</h2>
+        </div>
+
+        <ul class="poster__grid">
+          <li class="poster__card">
+            <div class="poster__img">
+              <img src="./img/poster/img1.png" alt="">
+            </div>
+            <div class="poster__text">
+              <span class="poster__date">17.07.2022 19.00</span>
+              <h4 class="poster__title">Рок в Манхэттене </h4>
+              <span class="poster__price">550 ₽ </span>
+            </div>
+          </li>
+
+          <li class="poster__card">
+            <div class="poster__img">
+              <img src="./img/poster/img2.png" alt="">
+            </div>
+            <div class="poster__text">
+              <span class="poster__date">17.07.2022 19.00</span>
+              <h4 class="poster__title">Рок в Манхэттене </h4>
+              <span class="poster__price">550 ₽ </span>
+            </div>
+          </li>
+
+          <li class="poster__card">
+            <div class="poster__img">
+              <img src="./img/poster/img3.png" alt="">
+            </div>
+            <div class="poster__text">
+              <span class="poster__date">17.07.2022 19.00</span>
+              <h4 class="poster__title">Рок в Манхэттене </h4>
+              <span class="poster__price">550 ₽ </span>
+            </div>
+          </li>
+
+          <li class="poster__card">
+            <div class="poster__img">
+              <img src="./img/poster/img4.png" alt="">
+            </div>
+            <div class="poster__text">
+              <span class="poster__date">17.07.2022 19.00</span>
+              <h4 class="poster__title">Рок в Манхэттене </h4>
+              <span class="poster__price">550 ₽ </span>
+            </div>
+          </li>
+
+          <li class="poster__card">
+            <div class="poster__img">
+              <img src="./img/poster/img4.png" alt="">
+            </div>
+            <div class="poster__text">
+              <span class="poster__date">17.07.2022 19.00</span>
+              <h4 class="poster__title">Рок в Манхэттене </h4>
+              <span class="poster__price">550 ₽ </span>
+            </div>
+          </li>
+
+          <li class="poster__card">
+            <div class="poster__img">
+              <img src="./img/poster/img1.png" alt="">
+            </div>
+            <div class="poster__text">
+              <span class="poster__date">17.07.2022 19.00</span>
+              <h4 class="poster__title">Рок в Манхэттене </h4>
+              <span class="poster__price">550 ₽ </span>
+            </div>
+          </li>
+
+          <li class="poster__card">
+            <div class="poster__img">
+              <img src="./img/poster/img2.png" alt="">
+            </div>
+            <div class="poster__text">
+              <span class="poster__date">17.07.2022 19.00</span>
+              <h4 class="poster__title">Рок в Манхэттене </h4>
+              <span class="poster__price">550 ₽ </span>
+            </div>
+          </li>
+
+          <li class="poster__card">
+            <div class="poster__img">
+              <img src="./img/poster/img3.png" alt="">
+            </div>
+            <div class="poster__text">
+              <span class="poster__date">17.07.2022 19.00</span>
+              <h4 class="poster__title">Рок в Манхэттене </h4>
+              <span class="poster__price">550 ₽ </span>
+            </div>
+          </li>
+
+          <li class="poster__card">
+            <div class="poster__img">
+              <img src="./img/poster/img3.png" alt="">
+            </div>
+            <div class="poster__text">
+              <span class="poster__date">17.07.2022 19.00</span>
+              <h4 class="poster__title">Рок в Манхэттене </h4>
+              <span class="poster__price">550 ₽ </span>
+            </div>
+          </li>
+
+          <li class="poster__card">
+            <div class="poster__img">
+              <img src="./img/poster/img4.png" alt="">
+            </div>
+            <div class="poster__text">
+              <span class="poster__date">17.07.2022 19.00</span>
+              <h4 class="poster__title">Рок в Манхэттене </h4>
+              <span class="poster__price">550 ₽ </span>
+            </div>
+          </li>
+
+          <li class="poster__card">
+            <div class="poster__img">
+              <img src="./img/poster/img1.png" alt="">
+            </div>
+            <div class="poster__text">
+              <span class="poster__date">17.07.2022 19.00</span>
+              <h4 class="poster__title">Рок в Манхэттене </h4>
+              <span class="poster__price">550 ₽ </span>
+            </div>
+          </li>
+
+          <li class="poster__card">
+            <div class="poster__img">
+              <img src="./img/poster/img2.png" alt="">
+            </div>
+            <div class="poster__text">
+              <span class="poster__date">17.07.2022 19.00</span>
+              <h4 class="poster__title">Рок в Манхэттене </h4>
+              <span class="poster__price">550 ₽ </span>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+
+  window.addEventListener('click', (event) => {
+    !(event.target.classList.contains('poster__card') || event.target.offsetParent.classList.contains('poster__card')) ?
+      document.querySelectorAll('.poster__card').forEach(el => {
+        el.classList.remove('_active')
+      }) : ''
+  })
+
+  document.querySelectorAll('.poster__card').forEach(el => {
+    el.addEventListener('click', selectPost)
+  })
+
+  function selectPost(event) {
+    document.querySelectorAll('.poster__card').forEach(el => {
+      el.classList.remove('_active')
+    })
+    event.currentTarget.classList.add('_active')
+  }
+</script>

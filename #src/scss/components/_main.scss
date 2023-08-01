@@ -1,0 +1,124 @@
+.main{
+  &__body{
+    display: flex;
+    justify-content: space-between;
+    @include adaptiv-value(column-gap, 24, 10, 1);
+    row-gap: 15px;
+    @include adaptiv-value(margin-bottom, 120, 30, 1);
+  }
+  &__left{
+    position: relative;
+    width: 100%;
+    max-width: 830px;
+  }
+  &__img{
+    height: 100%;
+    border-radius: 5px;
+    overflow: hidden;
+    img{
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+    }
+  }
+  &__text{
+    position: absolute;
+    @include adaptiv-value(bottom, 45, 15, 1);
+    @include adaptiv-value(left, 60, 15, 1);
+    z-index: 2;
+  }
+
+  &__date{
+    font-family: $fontGotham;
+    @include adaptiv-font(18, 14);
+    font-weight: 700;
+    @include adaptiv-line-height(27, 20);
+    letter-spacing: 0.9px;
+    text-transform: uppercase;
+    @include adaptiv-padding(8.5, 5, 20, 10, 1);
+    @include adaptiv-value(margin-bottom, 30, 10, 1);
+    background: #fff;
+    border-radius: 5px;
+    display: inline-block;
+  }
+
+  &__title{
+    font-family: $fontGotham;
+    @include adaptiv-font(40, 20);
+    font-style: normal;
+    font-weight: 400;
+    @include adaptiv-line-height(60, 30);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #fff;
+  }
+
+  &__right{
+    display:flex;
+    flex-direction:column;
+    width: 100%;
+    max-width: 416px;
+  }
+  &__tabs{
+    display: flex;
+    justify-content: space-between;
+  }
+  &__tab{
+    width: 100%;
+    text-align: center;
+    font-family: $fontGotham;
+    @include adaptiv-font(14, 12);
+    font-weight: 700;
+    @include adaptiv-line-height(21, 15);
+    letter-spacing: 0.7px;
+    text-transform: uppercase;
+    color: #fff;
+    padding: 12px 0;
+    border-radius: 5px 5px 0px 0px;
+    background: rgba(213, 98, 29, 0.05);
+
+    &._active{
+      background: rgba(213, 98, 29, 0.10);
+    }
+    @media (any-hover:hover){
+      cursor: pointer;
+      transition: all 0.3s ease 0s;
+    &:hover{
+      background: rgba(213, 98, 29, 0.10);
+      color: #D5621D;
+    }
+    }
+  }
+  &__tab-result{
+    background: rgba(#D5621D, 0.10000000149011612);
+    @include adaptiv-padding(38, 20, 35, 20, 1);
+    display: grid;
+    justify-content: center;
+    @include adaptiv-value(gap, 26, 10, 1);
+    grid-template-columns: repeat(2, 160px);
+    grid-template-rows: repeat(2, 200px);
+    border-radius: 0px 0px 5px 5px;
+    display: none;
+
+    &._active{
+      display: grid;
+    }
+
+    img{
+      width: 100%;
+    }
+  }
+
+  @media (max-width: 900px){
+    &__body{
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+  @media (max-width: 400px){
+  &__tab-result{
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+  }
+  }
+}

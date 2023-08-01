@@ -5,7 +5,7 @@
 @import "./modules/_fonts";
 
 //< " ПОДКЛЮЧАЕМ ФАЙЛ С ИКОНКАМИ " >=============================================================================================================>//
-// @import "./modules/_iconfonts";
+@import "./modules/_iconfonts";
 
 //< " МИКСИНЫ " >=============================================================================================================>//
 @import "./modules/_mixins";
@@ -26,7 +26,7 @@
 body {
    background-color: $colorBg;
 
-   font-family: $fontFamily;
+   font-family: $fontStolzl;
    color: $colorDark;
    font-size: 14px;
 
@@ -60,6 +60,13 @@ body {
 
 //< " ФАЙЛЫ СТИЛЕЙ ХЕАДЕР/ФУТЕР/ПОПАПЫ И Т.Д. " >=============================================================================================================>//
 @import "./components/_header";
+@import "./components/_main";
+@import "./components/_kitchen";
+@import "./components/_events";
+@import "./components/_rider";
+@import "./components/_poster";
+@import "./components/_cooperation";
+@import "./components/_gallery";
 @import "./components/_footer";
 @import "./components/_popup";
 

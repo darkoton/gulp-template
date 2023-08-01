@@ -1,0 +1,169 @@
+.rider{
+  @include adaptiv-value(margin-bottom, 150, 20, 1);
+
+  &__body{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  &__header{
+    @include adaptiv-value(margin-bottom, 80, 20, 1);
+  }
+  &__main{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    @include adaptiv-value(column-gap, 134, 20, 1)
+  }
+  &__left, &__right{
+    width: 100%;
+  }
+  &__left{
+    max-width: 530px;
+    display:flex;
+    flex-direction:column;
+    @include adaptiv-value(row-gap, 20, 10, 1);
+  }
+  &__right{
+    max-width: 415px;
+  }
+  &__spoller{
+    border-radius: 5px;
+    background: rgba(213, 98, 29, 0.10);
+    position: relative;
+    transition: all 0.3s ease 0s;
+    @include adaptiv-padding(20, 10, 40, 15, 1);
+    &._active{
+      background: #D5621D;
+
+      .rider__icon{
+        transform: scaleY(-1);
+      }
+      .rider__list{
+        display: flex;  
+      }
+    }
+  }
+  &__open{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+  }
+  &__title{
+    color: #fff;
+    font-family: $fontGotham;
+    @include adaptiv-font(18, 14);
+    font-weight: 700;
+    @include adaptiv-line-height(27, 20);
+    letter-spacing: 0.9px;  
+    text-transform: uppercase;
+  }
+  &__icon{
+    @include adaptiv-font(25, 20);
+    transition: all 0.3s ease 0s;
+  }
+  &__list{
+    flex-direction:column;
+    @include adaptiv-value(margin-top, 20, 10, 1);
+    color: #fff;
+    @include adaptiv-font(14, 12);
+    @include adaptiv-line-height(21, 15);
+    font-style: normal;
+    font-weight: 400;
+    @include adaptiv-value(row-gap, 14, 5, 1);
+
+    & li{
+      padding-left: 20px;
+      position: relative;
+      &::before{
+        content: "";
+        width: 4px;
+        height: 4px;
+        display: block;
+        background: #fff;
+        position: absolute;
+        border-radius: 50%;
+        left: 5px;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+    }
+  }
+
+  &__right{
+    &-title{
+      color: #fff;
+      text-align: center;
+      font-family: $fontGotham;
+      font-size: 32px;
+      @include adaptiv-font(32, 20);
+      @include adaptiv-line-height(48, 30);
+      letter-spacing: 1.6px;
+      text-transform: uppercase;
+      @include adaptiv-value(margin-bottom, 50, 20, 1);
+    }
+  }
+  &__cards{
+    display: flex;
+    justify-content: space-between;
+    column-gap: 10px;
+  }
+  &__card{
+    display:flex;
+    flex-direction:column;
+    align-items: center;
+  }
+  &__img{
+    @include adaptiv-value(margin-bottom, 30, 15, 1);
+    img{
+      width: 100%;
+    }
+  }
+  &__name{
+    color: #fff;
+    text-align: center;
+    width: 100%;
+    max-width: 115px;
+    @include adaptiv-value(max-width, 115, 110, 1);
+    font-family: $fontGotham;
+    @include adaptiv-font(14, 12);
+    font-weight: 700;
+    @include adaptiv-line-height(21, 15);
+    letter-spacing: 0.7px;
+    text-transform: uppercase;
+    @include adaptiv-value(margin-bottom, 25, 10, 1);
+  }
+
+  &__networks{
+    display: flex;
+    @include adaptiv-value(column-gap, 25, 10, 1);
+
+    a{
+      @include adaptiv-value(width, 40, 30, 1);  
+      @include adaptiv-value(height, 40, 30, 1);  
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      @include adaptiv-font(20, 16);
+      border-radius: 5px;
+      border: 2px solid  #D5621D; 
+
+      @media (any-hover:hover){
+        cursor: pointer;
+        transition: all 0.3s ease 0s;
+      &:hover{
+        background: #D5621D;
+      }
+      }
+    }
+  }
+
+  @media (max-width: 750px){
+  &__main{
+    flex-direction: column;
+    align-items: center;
+    row-gap: 20px;
+  }
+  }
+}
