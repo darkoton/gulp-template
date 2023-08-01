@@ -1,18 +1,19 @@
 @font-face {
-  font-family: 'icomoon';
-  src:  url('../iconfonts/icomoon.eot?mxltkl');
-  src:  url('../iconfonts/icomoon.eot?mxltkl#iefix') format('embedded-opentype'),
-    url('../iconfonts/icomoon.ttf?mxltkl') format('truetype'),
-    url('../iconfonts/icomoon.woff?mxltkl') format('woff'),
-    url('../iconfonts/icomoon.svg?mxltkl#icomoon') format('svg');
+  font-family: 'iconfonts';
+  src: url('../iconfonts/iconfonts.eot?lhqpxj');
+  src: url('../iconfonts/iconfonts.eot?lhqpxj#iefix') format('embedded-opentype'),
+    url('../iconfonts/iconfonts.ttf?lhqpxj') format('truetype'),
+    url('../iconfonts/iconfonts.woff?lhqpxj') format('woff'),
+    url('../iconfonts/iconfonts.svg?lhqpxj#iconfonts') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
 }
 
-[class^="icon-"], [class*=" icon-"] {
+[class^="_icon-"]:before,
+[class*=" _icon-"]:before {
   /* use !important to prevent issues with browser extensions that change fonts */
-  font-family: 'icomoon' !important;
+  font-family: 'iconfonts' !important;
   speak: never;
   font-style: normal;
   font-weight: normal;
@@ -25,23 +26,4 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-telegram:before {
-  content: "\e900";
-  color: #fff;
-}
-.icon-vk:before {
-  content: "\e901";
-  color: #fff;
-}
-.icon-arrow-left:before {
-  content: "\e902";
-  color: #fff;
-}
-.icon-arrow-right:before {
-  content: "\e903";
-  color: #fff;
-}
-.icon-arrow-up:before {
-  content: "\e904";
-  color: #fff;
-}
+//< " КЛАССЫ " >=============================================================================================================>//

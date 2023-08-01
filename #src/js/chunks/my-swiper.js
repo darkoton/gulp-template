@@ -1,11 +1,21 @@
-new Swiper(".kitchen__slider", {
-  slidesPerView: 1,
-  spaceBetween: 30,
-  loop: true,
-  autoplay: true,
-  navigation: {
-    nextEl: ".kitchen__next",
-    prevEl: ".kitchen__prev",
-  },
+new Swiper(".swiper", {
+	slidesPerView: 1,
+	spaceBetween: 15,
+	grabCursor: true,
+	loop: true,
+	speed: 800,
+
+	autoplay: {
+		delay: 3500,
+	},
+
+	navigation: {
+		nextEl: ".swiper-button-next",
+		prevEl: ".swiper-button-prev",
+	},
+
+	breakpoints: {
+		767.8: {},
+	}
 });
 

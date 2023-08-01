@@ -2,20 +2,14 @@
 
 // ОБЩИЕ НАСТРОЙКИ СТРАНИЦЫ
 $minWidth: 320;
-// РАЗМЕР ПОЛОТНА
 $maxWidth: 1920;
-// РАЗМЕР КОНТЕЙНЕРА
-$maxWidthContainer: 1296;
-
-$containerPadding: 20;
+$maxWidthContainer: 1200;
+$containerPadding: 30;
 
 // ЦВЕТА
 $colorWhite: #fff;
 $colorDark: #222;
 
 // СТАНДАРТНЫЕ НАСТРОЙКИ СТРАНИЦЫ
-$colorBg: #210E09;
+$colorBg: #fff;
 $fontFamily: Arial, "Helvetica Neue", Helvetica, sans-serif;
-$fontStolzl: "Stolzl";
-$fontStolzlBook: "Stolzl book";
-$fontGotham: "Gotham Pro";
