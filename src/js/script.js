@@ -1,6 +1,6 @@
 //< " CONNECTING JS COMPONENTS " >=============================================================================================================>//
 
-import isDevice from "./modules/device.js"
+import isDevice from './modules/device.js';
 
 // import "./modules/spoiler.js"  // SPOILERS
 
@@ -15,7 +15,6 @@ import isDevice from "./modules/device.js"
 // import "./modules/tabs.js"  // TABS
 
 // import "./modules/parallax.js"  // PARALLAX EFFECT
-
 
 //< " СКРИПТЫ " >=============================================================================================================>//
 
