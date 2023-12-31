@@ -13,5 +13,4 @@ export const images = () => {
     .pipe(app.plugins.newer(`${app.path.buildFolder}/img/`))
     .pipe(app.gulp.dest(`${app.path.buildFolder}/img/`))
     .pipe(app.plugins.browsersync.stream())
-
 }

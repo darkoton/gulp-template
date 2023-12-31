@@ -1,4 +1,6 @@
 //< " CONNECTING JS COMPONENTS " >=============================================================================================================>//
+import isWebp from "./modules/webp.js"
+
 
 import isDevice from './modules/device.js';
 
@@ -18,4 +20,5 @@ import isDevice from './modules/device.js';
 
 //< " СКРИПТЫ " >=============================================================================================================>//
 
+isWebp();
 isDevice();

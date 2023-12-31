@@ -15,10 +15,11 @@
 
 //< " body SITE " >=============================================================================================================>//
 body {
-  background-color: $colorBg;
+  // background-color: $colorBg;
   font-family: $fontFamily;
   color: $colorDark;
   font-size: 14px;
+  background: url("./img/main-bg.jpg");
 
   // ._lock-scroll
   &._lock-scroll {
