@@ -1,9 +1,14 @@
+//HTML
 import htmlmin from "gulp-htmlmin";
 import cssmin from "gulp-cssmin";
+
+//JS
 import jsmin from "gulp-jsmin";
+
+//IMAGES
 import imagemin from "gulp-image"
 
-//css 
+//CSS
 import webpcss from "gulp-webpcss"; // Вывод WEBP изображений
 import autoPrefixer from "gulp-autoprefixer"; // Добавление вендорых префиксов
 import groupCssMediaQueries from "gulp-group-css-media-queries"; // групировка медиа запросов
@@ -38,7 +43,6 @@ export const minJS = () => {
 
 export const minImg = () => {
   return app.gulp.src(`${app.path.buildFolder}/img/**/*.{jpg,png,jpeg,gif,webp,svg}`)
-    .pipe(app.plugins.newer(`${app.path.buildFolder}/img`))
     .pipe(imagemin())
     .pipe(app.gulp.dest(`${app.path.buildFolder}/img/`))
 }
