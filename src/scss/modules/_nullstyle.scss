@@ -75,7 +75,8 @@ ul li {
   list-style: none;
 }
 
-img {
+img,
+picture {
   vertical-align: top;
 }
 
@@ -95,9 +96,9 @@ input::-webkit-inner-spin-button {
   margin: 0;
 }
 
-// input[type=number] {
-//    -moz-appearance: textfield;
-// }
+input[type="number"] {
+  -moz-appearance: textfield;
+}
 
 input {
   border-radius: 0;

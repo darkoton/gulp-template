@@ -1,8 +1,9 @@
 //< " CONNECTING JS COMPONENTS " >=============================================================================================================>//
-import isWebp from "./modules/webp.js"
+import isWebp from "./modules/webp.js"; //SUPPORT WEBP
 
+import isDevice from './modules/device.js'; //DEFINE DEVICE
 
-import isDevice from './modules/device.js';
+// import './modules/preloader.js'; // PRELOADER
 
 // import "./modules/spoiler.js"  // SPOILERS
 

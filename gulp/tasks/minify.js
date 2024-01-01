@@ -38,6 +38,7 @@ export const minJS = () => {
 
 export const minImg = () => {
   return app.gulp.src(`${app.path.buildFolder}/img/**/*.{jpg,png,jpeg,gif,webp,svg}`)
+    .pipe(app.plugins.newer(`${app.path.buildFolder}/img`))
     .pipe(imagemin())
     .pipe(app.gulp.dest(`${app.path.buildFolder}/img/`))
 }
