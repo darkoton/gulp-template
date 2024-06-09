@@ -1,0 +1,58 @@
+.preloader {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  z-index: 1000;
+  background: #000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease-out 0s;
+  row-gap: 20px;
+  color: #fff;
+
+  &.preloader--hide {
+    opacity: 0;
+    visibility: hidden;
+    z-index: -1000;
+  }
+
+  .loader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100px;
+    width: 100px;
+    column-gap: 10px;
+    span {
+      height: 100%;
+      width: 100%;
+      background: #fff;
+
+      &:first-child {
+        animation: fade 0.7s ease 0s infinite alternate both;
+      }
+      &:nth-child(2) {
+        animation: fade 0.7s ease 0.3s infinite alternate both;
+      }
+      &:last-child {
+        animation: fade 0.7s ease 0.6s infinite alternate both;
+      }
+    }
+  }
+  @keyframes fade {
+    from {
+      height: 30%;
+    }
+    to {
+      height: 100%;
+    }
+  }
+
+  .percent {
+    @include adaptiv-value(font-size, 30, 20, 1);
+  }
+}
