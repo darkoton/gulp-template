@@ -1,28 +1,29 @@
 //< " FILE WITH RESET STYLES " >=============================================================================================================>//
-@import "./modules/_nullstyle";
+@import "./modules/nullstyle";
 
 //< " CONNECTING THE FILE WITH FONTS " >=====================================================================================================>//
-// @import "./modules/_fonts";
+// @import "./modules/fonts";
 
 //< " CONNECTING THE FILE WITH ICONS " >=====================================================================================================>//
-// @import "./modules/_iconfonts";
+// @import "./modules/iconfonts";
 
 //< " MIXINS " >=============================================================================================================>//
-@import "./modules/_mixins";
+@import "./modules/mixins";
 
 //< " FILE WITH VARIABLES " >=============================================================================================================>//
-@import "./modules/_vars";
+@import "./modules/vars";
 
 //< " body SITE " >=============================================================================================================>//
 body {
   background-color: $colorBg;
+
   font-family: $fontFamily;
   color: $colorDark;
   font-size: 14px;
 
   // ._lock-scroll
   &._lock-scroll {
-    overflow: hidden;
+     overflow: hidden;
   }
 }
 
@@ -51,7 +52,6 @@ body {
 //< " FILES COMPONENTS " >=============================================================================================================>//
 @import "./components/_header";
 @import "./components/_footer";
-// @import "./components/_preloader";
 
 //< " MAIN BLOCK " >=============================================================================================================>//
 .page {
