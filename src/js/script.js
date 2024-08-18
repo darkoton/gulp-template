@@ -1,5 +1,5 @@
 //< " CONNECTING JS COMPONENTS " >=============================================================================================================>//
-import isWebp from "./modules/webp.js"; //SUPPORT WEBP
+import isWebp from './modules/webp.js'; //SUPPORT WEBP
 
 import isDevice from './modules/device.js'; //DEFINE DEVICE
 

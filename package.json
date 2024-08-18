@@ -35,7 +35,7 @@
     "gulp-webp": "^5.0.0",
     "gulp-webpcss": "^1.1.1",
     "prettier": "^3.1.1",
-    "sass": "^1.69.5",
+    "sass": "^1.77.8",
     "webp-converter": "^2.2.3",
     "webpack": "^5.89.0",
     "webpack-stream": "^7.0.0"

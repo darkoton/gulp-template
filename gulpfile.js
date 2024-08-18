@@ -2,7 +2,6 @@ import gulp from 'gulp';
 import { path } from './gulp/config/path.js';
 import { plugins } from './gulp/config/plugins.js';
 
-// eslint-disable-next-line no-undef
 global.app = {
   gulp: gulp,
   path: path,
@@ -15,14 +14,18 @@ import { html } from './gulp/tasks/html.js';
 import { scss } from './gulp/tasks/scss.js';
 import { js } from './gulp/tasks/js.js';
 import { images } from './gulp/tasks/images.js';
-import { otfToTtf, ttfToWoff, iconfonts } from "./gulp/tasks/fonts.js";
+import { otfToTtf, ttfToWoff, iconfonts } from './gulp/tasks/fonts.js';
 import { server } from './gulp/tasks/server.js';
 import { minHTML, minCSS, minJS, minImg } from './gulp/tasks/minify.js';
+
+function realodBrowser(){
+  app.plugins.browsersync.reload()
+}
 
 function watcher() {
   gulp.watch(`${path.srcFolder}/assets/`, copy);
   gulp.watch(`${path.srcFolder}/html/**/*.html`, html);
-  gulp.watch(`${path.srcFolder}/scss/**/*.scss`, scss);
+  gulp.watch(`${path.srcFolder}/scss/**/*.scss`, scss).on('change', realodBrowser)
   gulp.watch(`${path.srcFolder}/js/**/*.js`, js);
   gulp.watch(`${path.srcFolder}/img/**/*.{png,jpeg,jpg,gif,webp,svg}`, images);
 }
