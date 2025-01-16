@@ -21,7 +21,8 @@ export const minHTML = () => {
 
 export const minCSS = () => {
   return app.gulp.src(`${app.path.buildFolder}/css/*.css`)
-    .pipe(groupCssMediaQueries())
+    //comment if use tailwind
+    // .pipe(groupCssMediaQueries())
     .pipe(webpcss({
       webpClass: ".webp",
       noWebpClass: ".no-webp"
