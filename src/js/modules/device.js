@@ -1,4 +1,4 @@
-export default function () {
+function isDevice () {
   let isMobile = {
     Android: function () { return navigator.userAgent.match(/Android/i); },
     BlackBerry: function () { return navigator.userAgent.match(/BlackBerry/i); },
@@ -14,3 +14,5 @@ export default function () {
     document.body.classList.add("_pc");
   }
 } 
+
+isDevice()

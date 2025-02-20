@@ -1,23 +1,23 @@
 //< " CONNECTING JS COMPONENTS " >=============================================================================================================>//
-import isWebp from './modules/webp.js'; //SUPPORT WEBP
+@@include("./modules/webp.js"); //SUPPORT WEBP
 
-import isDevice from './modules/device.js'; //DEFINE DEVICE
+@@include("./modules/device.js"); //DEFINE DEVICE
 
-// import './modules/preloader.js'; // PRELOADER
+/* @@include("./modules/preloader.js"); // PRELOADER */ 
 
-// import "./modules/spoiler.js"  // SPOILERS
+/* @@include("./modules/dynamic_adap.js")  // DYNAMIC ADAPTIVE */ 
 
-// import "./modules/dynamic_adap.js"  // DYNAMIC ADAPTIVE
+/* @@include("./modules/scroll_header.js")  // SCROLL HEADER */ 
 
-// import "./modules/scroll_header.js"  // SCROLL HEADER
+/*@@include("./modules/swiper.js"); // SLIDER SWIPER */
 
-// import "./modules/swiper.js"  // SLIDER SWIPER
+/* @@include "./modules/animate_scroll.js" // ANIMATE WITH SCROLL */  
 
-// import "./modules/animate_scroll.js"  // ANIMATE WITH SCROLL
+/*@@include("./modules/tabs.js"); // TABS */
 
-// import "./modules/tabs.js"  // TABS
+/*@@include("./modules/spoiler.js"); // TABS */
 
-// import "./modules/parallax.js"  // PARALLAX EFFECT
+/* @@include("./modules/parallax.js")  // PARALLAX EFFECT */
 
 //< " СКРИПТЫ " >=============================================================================================================>//
 

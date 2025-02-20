@@ -1,5 +1,5 @@
 /* Проверка поддержки webp, добавление класса webp или no-webp для HTML */
-export default function isWebp() {
+function isWebp() {
   // Проверка поддержки webp
   function testWebP(callback) {
     let webP = new Image();
@@ -15,3 +15,5 @@ export default function isWebp() {
     document.documentElement.classList.add(className);
   })
 }
+
+isWebp()
