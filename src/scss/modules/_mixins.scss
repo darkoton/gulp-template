@@ -1,132 +1,34 @@
-//< " RESPONSIVE VALUE " >=============================================================================================================>//
-@mixin adaptiv-value($property, $startSize, $minSize, $type) {
-  $addSize: $startSize - $minSize;
+@use "sass:math";
 
-  @if $type==1 {
-    /* if < container */
-    #{$property}: $startSize + px;
-
-    @media (max-width: #{$maxWidthContainer + px}) {
-      #{$property}: calc(#{$minSize + px} + #{$addSize} * ((100vw - 320px) / #{$maxWidthContainer - 320}));
-    }
+//< " RESPONSIVE PROPERTY " >=============================================================================================================>//
+@mixin fluid($property, $max, $min, $min-screen: 320px, $max-screen: 430px) {
+  & {
+    #{$property}: #{$max};
   }
 
-  @else if $type==2 {
-    /* if > container */
-    #{$property}: $startSize + px;
+  @media (max-width: #{$max-screen}) {
+    $value-range: math.div($min - $max, 1px);
+    $screen-range: math.div($max-screen - $min-screen, 1px);
 
-    @media (min-width: #{$maxWidthContainer + px}) {
-      #{$property}: calc(#{$minSize + px} + #{$addSize} * ((100vw - 320px) / #{$maxWidth - 320}));
-    }
+    #{$property}: calc(#{$min} - #{$value-range} * (100vw - #{$min-screen}) / #{$screen-range});
   }
 
-  @else {
-    /* always */
-    #{$property}: calc(#{$minSize + px} + #{$addSize} * ((100vw - 320px) / #{$maxWidth - 320}));
+  @media (max-width: #{$min-screen}) {
+    #{$property}: #{$min};
   }
-
-}
-
-//< " RESPONSIVE VALUE WITH OF A SPECIFIC SCREEN WIDTH " >=============================================================================================================>//
-
-@mixin adaptiv-value-width($property, $startSize, $minSize, $width, $type) {
-  $addSize: $startSize - $minSize;
-
-  @if $type==1 {
-    /* if < container */
-    #{$property}: $startSize + px;
-
-    @media (max-width: #{$width + px}) {
-      #{$property}: calc(#{$minSize + px} + #{$addSize} * ((100vw - 320px) / #{$width - 320}));
-    }
-  }
-
-  @else if $type==2 {
-    /* if > container */
-    #{$property}: $startSize + px;
-
-    @media (min-width: #{$width + px}) {
-      #{$property}: calc(#{$minSize + px} + #{$addSize} * ((100vw - 320px) / #{$width - 320}));
-    }
-  }
-
-}
-
-//< " RESPONSIVE INDENT" >=============================================================================================================>//
-// H - horizontal
-// V - vertical
-@mixin adaptiv-indent($indent, $startSizeV, $minSizeV, $startSizeH, $minSizeH, $type) {
-  $addSizeV: $startSizeV - $minSizeV;
-  $addSizeH: $startSizeH - $minSizeH;
-
-  @if $indent=="padding" {
-    @if $type==1 {
-      /* if < container */
-      padding: $startSizeV + px $startSizeH + px;
-
-      @media (max-width: #{$maxWidthContainer + px}) {
-        padding: calc(#{$minSizeV + px} + #{$addSizeV} * ((100vw - 320px) / #{$maxWidthContainer - 320}))
-                calc(#{$minSizeH + px} + #{$addSizeH} * ((100vw - 320px) / #{$maxWidthContainer - 320}));
-      }
-    }
-
-    @else if $type==2 {
-      /* if > container */
-      padding: $startSizeV + px $startSizeH + px;
-
-      @media (min-width: #{$maxWidthContainer + px}) {
-        padding: calc(#{$minSizeV + px} + #{$addSizeV} * ((100vw - 320px) / #{$maxWidth - 320}))
-                calc(#{$minSizeH + px} + #{$addSizeH} * ((100vw - 320px) / #{$maxWidth - 320}));
-      }
-    }
-
-    @else {
-      /* always  */
-      padding: calc(#{$minSizeV + px} + #{$addSizeV} * ((100vw - 320px) / #{$maxWidth - 320}))
-              calc(#{$minSizeH + px} + #{$addSizeH} * ((100vw - 320px) / #{$maxWidth - 320}));
-    }
-  }@else if $indent=="margin" {
-    @if $type==1 {
-      /* if < container */
-      margin: $startSizeV + px $startSizeH + px;
-
-      @media (max-width: #{$maxWidthContainer + px}) {
-        margin: calc(#{$minSizeV + px} + #{$addSizeV} * ((100vw - 320px) / #{$maxWidthContainer - 320}))
-                calc(#{$minSizeH + px} + #{$addSizeH} * ((100vw - 320px) / #{$maxWidthContainer - 320}));
-      }
-    }
-
-    @else if $type==2 {
-      /* if > container */
-      margin: $startSizeV + px $startSizeH + px;
-
-      @media (min-width: #{$maxWidthContainer + px}) {
-        margin: calc(#{$minSizeV + px} + #{$addSizeV} * ((100vw - 320px) / #{$maxWidth - 320}))
-                calc(#{$minSizeH + px} + #{$addSizeH} * ((100vw - 320px) / #{$maxWidth - 320}));
-      }
-    }
-
-    @else {
-      /* always */
-      margin: calc(#{$minSizeV + px} + #{$addSizeV} * ((100vw - 320px) / #{$maxWidth - 320}))
-              calc(#{$minSizeH + px} + #{$addSizeH} * ((100vw - 320px) / #{$maxWidth - 320}));
-    }
-  }
-  
-
 }
 
 //< " GRADIENT BORDER/FONT " >=============================================================================================================>//
 
-//< " BUTTON " >
-@mixin button-gradient($dir:0deg, $from, $to, $borderRadius:0px, $opacity:1) {
+//< " border " >
+@mixin border-gradient($dir: 0deg, $from, $to, $borderRadius: 0px, $opacity: 1) {
   position: relative;
   background: transparent;
   overflow: hidden;
   z-index: 0;
   border-radius: $borderRadius;
 
-  &::before{
+  &::before {
     content: "";
     position: absolute;
     z-index: -1;
@@ -134,55 +36,55 @@
     background: linear-gradient($dir, $from 2.29%, color-mix(in srgb, $from, $to), 49.7%, $to 68.56%);
     padding: 2px;
     border-radius: $borderRadius;
-    -webkit-mask: linear-gradient(rgb(255, 255, 255) 0px, rgb(255, 255, 255) 0px) content-box content-box, linear-gradient(rgb(255, 255, 255) 0px, rgb(255, 255, 255) 0px);
+    -webkit-mask:
+      linear-gradient(rgb(255, 255, 255) 0px, rgb(255, 255, 255) 0px) content-box content-box,
+      linear-gradient(rgb(255, 255, 255) 0px, rgb(255, 255, 255) 0px);
     -webkit-mask-composite: xor;
     transition: all 0.3s ease 0s;
   }
-  &::after{
+  &::after {
     content: "";
     background: linear-gradient($dir, $from 2.29%, color-mix(in srgb, $from, $to) 49.7%, $to 68.56%);
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
     position: absolute;
     width: 100%;
     height: 100%;
     left: 0;
-    top: 0;  
+    top: 0;
     z-index: -1;
     transition: all 0.3s ease 0s;
     opacity: $opacity;
   }
 
-  @media (any-hover:hover){
-    cursor: pointer;
-    transition: all 0.3s ease 0s;
-    &:hover{
-      &::after{
-        @if $opacity==1{
-        opacity: 0;
-        }@else if $opacity==0{
-        opacity: 1;
-        }
-      }
-    }
-  }
+  // @media (any-hover: hover) {
+  //   cursor: pointer;
+  //   transition: all 0.3s ease 0s;
+  //   &:hover {
+  //     &::after {
+  //       @if $opacity==1 {
+  //         opacity: 0;
+  //       } @else if $opacity==0 {
+  //         opacity: 1;
+  //       }
+  //     }
+  //   }
+  // }
 }
 
-
 //< " FONT " >
-@mixin font-gradient($dir, $colors... ) {
+@mixin font-gradient($dir, $colors...) {
   background: -webkit-linear-gradient($dir, $colors);
-	-webkit-background-clip: text;
-	-webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 //< " SCROLLBAR " >
-@mixin scrollbars(
-  $size: 10px,
-  $foreground-color: #999,
-  $background-color: #333,
-  $border-radius: 0px,
-) {
+@mixin scrollbars($size: 10px, $foreground-color: #999, $background-color: #333, $border-radius: 0px) {
   // For Chrome & Safari
   &::-webkit-scrollbar {
     width: $size;
@@ -190,8 +92,7 @@
   }
   &::-webkit-scrollbar-thumb {
     background: $foreground-color;
-    border-radius:   $border-radius;
-    ;
+    border-radius: $border-radius;
   }
   &::-webkit-scrollbar-track {
     background: $background-color;
