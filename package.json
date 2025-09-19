@@ -42,9 +42,7 @@
     "tailwindcss": "^3.4.17",
     "webp-converter": "^2.2.3",
     "webpack": "^5.89.0",
-    "webpack-stream": "^7.0.0"
-  },
-  "dependencies": {
+    "webpack-stream": "^7.0.0",
     "gulp-webp-html-nosvg": "^1.1.1"
   }
 }
