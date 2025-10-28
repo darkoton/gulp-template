@@ -4,7 +4,7 @@ import gulpSass from "gulp-sass";
 const sass = gulpSass(dartSass)
 
 export const scss = () => { 
-    return app.gulp.src(`${app.path.srcFolder}/scss/style.scss`, { soursemaps: true })
+    return app.gulp.src(`${app.path.srcFolder}/scss/*.scss`, { soursemaps: true })
     .pipe(app.plugins.plumber(app.plugins.notify.onError({
       title: "SCSS",
       message: "Error: <%= error.message %>"

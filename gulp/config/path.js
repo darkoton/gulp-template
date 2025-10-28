@@ -1,6 +1,6 @@
 import nodePath from "path"
 
-const rootFolder = nodePath.basename(nodePath.resolve())
+const rootFolder = nodePath.resolve()
 const srcFolder = "./src";
 const buildFolder = "./dist";
 

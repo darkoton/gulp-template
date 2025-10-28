@@ -4,14 +4,14 @@ import tailwindCSS from "tailwindcss";
 import postcss from "gulp-postcss";
 import autoprefixer from "autoprefixer";
 
-export const tailwind = () => { 
+export default function tailwindModule() {
   return app.gulp.src(`${app.path.buildFolder}/css/*.css`, { sourcemaps: true })
     .pipe(app.plugins.plumber(app.plugins.notify.onError({
       title: "TAILWIND CSS",
       message: "Error: <%= error.message %>"
     })))
     .pipe(postcss([
-      tailwindCSS('./tailwind.config.js'),
+      tailwindCSS('./tailwind.config.json'),
       autoprefixer()
     ]))
     .pipe(app.gulp.dest(`${app.path.buildFolder}/css/`))

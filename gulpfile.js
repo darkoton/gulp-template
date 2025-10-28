@@ -30,14 +30,22 @@ for (let index = 0; index < Object.keys(packages).length; index++) {
 
   const packageConfig = packages[key];
 
+  let type = 'module'
   if (packageConfig.enable) {
-    for (let i = 0; i < Object.keys(packageConfig.tasks).length; i++) {
-      const taskKey = Object.keys(packageConfig.tasks)[i]
-      const task = packageConfig.tasks[taskKey];
+    if (packageConfig.config.type === 'cdn') {
+      type = 'cdn'
+    } else if (packageConfig.config.type === 'module') {
+      type = 'module'
+    }
+  }
 
-      if (task) {
-        taskSeries[taskKey].push(task)
-      }
+  const tasks = packageConfig.tasks[type]
+  for (let i = 0; i < Object.keys(tasks).length; i++) {
+    const taskKey = Object.keys(tasks)[i]
+    const task = tasks[taskKey];
+
+    if (task) {
+      taskSeries[taskKey].push(task)
     }
   }
 }
@@ -53,6 +61,7 @@ function watcher() {
 
 const fonts = gulp.series(otfToTtf, ttfToWoff, iconfonts);
 
+// const mainTasks = gulp.series(gulp.parallel(copy, gulp.series(...taskSeries.html)));
 const mainTasks = gulp.series(fonts, gulp.parallel(copy, gulp.series(...taskSeries.html), gulp.series(...taskSeries.style), gulp.series(...taskSeries.js), images));
 
 const dev = gulp.series(reset, mainTasks, gulp.parallel(watcher, server));
