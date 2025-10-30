@@ -18,6 +18,7 @@ import { images } from './gulp/tasks/images.js';
 import { otfToTtf, ttfToWoff, iconfonts } from './gulp/tasks/fonts.js';
 import { server } from './gulp/tasks/server.js';
 import { minHTML, minCSS, minJS, minImg } from './gulp/tasks/minify.js';
+import { buildCSS } from './gulp/tasks/build.js';
 
 const taskSeries = {
   html: [html],
@@ -75,11 +76,13 @@ const mainTasks = gulp.series(
   ),
 );
 
+const buildTasks = gulp.series(buildCSS);
+
 const dev = gulp.series(reset, mainTasks, gulp.parallel(watcher, server));
 
-const build = gulp.series(reset, mainTasks);
+const build = gulp.series(reset, mainTasks, buildTasks);
 
-const buildMin = gulp.series(reset, mainTasks, gulp.parallel(minHTML, minCSS, minJS, minImg));
+const buildMin = gulp.series(build, gulp.parallel(minHTML, minCSS, minJS, minImg));
 
 gulp.task('dev', dev);
 

@@ -1,19 +1,8 @@
-import settings from '../config/settings.js';
-
-//HTML
+//Minification
 import htmlmin from 'gulp-htmlmin';
 import cssmin from 'gulp-cssmin';
-
-//JS
 import jsmin from 'gulp-jsmin';
-
-//IMAGES
 import imagemin from 'gulp-image';
-
-//CSS
-import ImagesCSS from 'gulp-web-images-css'; // Вывод WEBP изображений
-import autoPrefixer from 'gulp-autoprefixer'; // Добавление вендорых префиксов
-import groupCssMediaQueries from 'gulp-group-css-media-queries'; // групировка медиа запросов
 
 export const minHTML = () => {
   return app.gulp
@@ -23,26 +12,10 @@ export const minHTML = () => {
 };
 
 export const minCSS = () => {
-  return (
-    app.gulp
-      .src(`${app.path.buildFolder}/css/*.css`)
-      //comment if use tailwind
-      // .pipe(groupCssMediaQueries())
-      .pipe(
-        ImagesCSS({
-          mode: settings.gulp.images.mode,
-        }),
-      )
-      .pipe(
-        autoPrefixer({
-          grid: true,
-          overrideBrowserslist: ['last 3 versions'],
-          cascade: true,
-        }),
-      )
-      .pipe(cssmin())
-      .pipe(app.gulp.dest(`${app.path.buildFolder}/css/`))
-  );
+  return app.gulp
+    .src(`${app.path.buildFolder}/css/*.css`)
+    .pipe(cssmin())
+    .pipe(app.gulp.dest(`${app.path.buildFolder}/css/`));
 };
 
 export const minJS = () => {

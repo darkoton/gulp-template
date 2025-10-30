@@ -15,16 +15,16 @@ export default {
           js: tailwindJS_CDN,
         },
         module: {
-          html: tailwindModule,
+          html: null,
           style: tailwindModule,
-          js: tailwindModule,
+          js: null,
         },
       },
     },
   },
   gulp: {
     images: {
-      mode: 'all', // 'all' || 'webp' || 'avif'  - Image optimization configuration
+      mode: 'webp', // 'all' || 'webp' || 'avif'  - Image optimization configuration
     },
   },
 };
