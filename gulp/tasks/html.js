@@ -1,14 +1,24 @@
-import fileinclude from "gulp-file-include";
-import webHtmlNosvg from "gulp-webp-html-nosvg";
+import fileinclude from 'gulp-file-include';
+import webphtml from 'gulp-webp-html-nosvg';
+import avifWebpHTML from 'gulp-avif-webp-html';
+import gulpif from 'gulp-if';
+import settings from '../config/settings.js';
 
 export const html = () => {
-  return app.gulp.src(`${app.path.srcFolder}/html/*.html`, { soursemaps: true })
-    .pipe(app.plugins.plumber(app.plugins.notify.onError({
-      title: "HTML",
-      message: "Error: <%= error.message %>"
-    })))
+  return app.gulp
+    .src(`${app.path.srcFolder}/html/*.html`, { soursemaps: true })
+    .pipe(
+      app.plugins.plumber(
+        app.plugins.notify.onError({
+          title: 'HTML',
+          message: 'Error: <%= error.message %>',
+        }),
+      ),
+    )
     .pipe(fileinclude())
-    .pipe(webHtmlNosvg())
+    .pipe(gulpif(settings.gulp.images.mode === 'avif', avifWebpHTML())) // Needs to be fixed in the future
+    .pipe(gulpif(settings.gulp.images.mode === 'webp', webphtml()))
+    .pipe(gulpif(settings.gulp.images.mode === 'all', avifWebpHTML()))
     .pipe(app.gulp.dest(`${app.path.buildFolder}/`))
-    .pipe(app.plugins.browsersync.stream())
-}
+    .pipe(app.plugins.browsersync.stream());
+};

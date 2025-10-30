@@ -1,7 +1,7 @@
 import gulp from 'gulp';
 import { path } from './gulp/config/path.js';
 import { plugins } from './gulp/config/plugins.js';
-import packages from './gulp/config/packages.js';
+import settings from './gulp/config/settings.js';
 
 global.app = {
   gulp: gulp,
@@ -23,46 +23,56 @@ const taskSeries = {
   html: [html],
   style: [scss],
   js: [js],
-}
+  images: [images],
+};
 
-for (let index = 0; index < Object.keys(packages).length; index++) {
-  const key = Object.keys(packages)[index]
+for (let index = 0; index < Object.keys(settings.packages).length; index++) {
+  const key = Object.keys(settings.packages)[index];
+  const packageConfig = settings.packages[key];
 
-  const packageConfig = packages[key];
-
-  let type = 'module'
+  let type = 'module';
   if (packageConfig.enable) {
     if (packageConfig.config.type === 'cdn') {
-      type = 'cdn'
+      type = 'cdn';
     } else if (packageConfig.config.type === 'module') {
-      type = 'module'
+      type = 'module';
     }
   }
 
-  const tasks = packageConfig.tasks[type]
+  const tasks = packageConfig.tasks[type];
   for (let i = 0; i < Object.keys(tasks).length; i++) {
-    const taskKey = Object.keys(tasks)[i]
+    const taskKey = Object.keys(tasks)[i];
     const task = tasks[taskKey];
 
     if (task) {
-      taskSeries[taskKey].push(task)
+      taskSeries[taskKey].push(task);
     }
   }
 }
 
 function watcher() {
   gulp.watch(`${path.srcFolder}/assets/`, copy);
-  gulp.watch(`${path.srcFolder}/img/**/*.{png,jpeg,jpg,gif,webp,svg}`, images);
+  gulp.watch(
+    `${path.srcFolder}/img/**/*.{png,jpeg,jpg,gif,webp,svg}`,
+    gulp.series(...taskSeries.images),
+  );
   gulp.watch(`${path.srcFolder}/html/**/*.html`, gulp.series(...taskSeries.html));
-  gulp.watch(`${path.srcFolder}/scss/**/*.scss`, gulp.series(...taskSeries.style))
+  gulp.watch(`${path.srcFolder}/scss/**/*.scss`, gulp.series(...taskSeries.style));
   gulp.watch(`${path.srcFolder}/js/**/*.js`, gulp.series(...taskSeries.js));
-
 }
 
 const fonts = gulp.series(otfToTtf, ttfToWoff, iconfonts);
 
-// const mainTasks = gulp.series(gulp.parallel(copy, gulp.series(...taskSeries.html)));
-const mainTasks = gulp.series(fonts, gulp.parallel(copy, gulp.series(...taskSeries.html), gulp.series(...taskSeries.style), gulp.series(...taskSeries.js), images));
+const mainTasks = gulp.series(
+  fonts,
+  gulp.parallel(
+    copy,
+    gulp.series(...taskSeries.html),
+    gulp.series(...taskSeries.style),
+    gulp.series(...taskSeries.js),
+    gulp.series(...taskSeries.images),
+  ),
+);
 
 const dev = gulp.series(reset, mainTasks, gulp.parallel(watcher, server));
 

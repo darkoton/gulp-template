@@ -1,5 +1,5 @@
 //< " CONNECTING JS COMPONENTS " >=============================================================================================================>//
-@@include("./modules/webp.js"); //SUPPORT WEBP
+@@include("./modules/imageFormat.js"); //SUPPORT WEBP
 
 @@include("./modules/device.js"); //DEFINE DEVICE
 
@@ -22,4 +22,5 @@
 //< " СКРИПТЫ " >=============================================================================================================>//
 
 isWebp();
+isAvif()
 isDevice();
