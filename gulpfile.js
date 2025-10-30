@@ -31,15 +31,16 @@ for (let index = 0; index < Object.keys(settings.packages).length; index++) {
   const packageConfig = settings.packages[key];
 
   let type = 'module';
+  const tasks = {};
   if (packageConfig.enable) {
     if (packageConfig.config.type === 'cdn') {
       type = 'cdn';
     } else if (packageConfig.config.type === 'module') {
       type = 'module';
     }
+    Object.assign(tasks, packageConfig.tasks[type]);
   }
 
-  const tasks = packageConfig.tasks[type];
   for (let i = 0; i < Object.keys(tasks).length; i++) {
     const taskKey = Object.keys(tasks)[i];
     const task = tasks[taskKey];

@@ -12,4 +12,4 @@ function scrollHeader() {
   const headerObserver = new IntersectionObserver(callback);
   headerObserver.observe(header);
 }
-scrollHeader()
+scrollHeader();

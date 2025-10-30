@@ -72,45 +72,76 @@ if (spollersArray.length > 0) {
     });
   }
   // Работа с контентом
-  function initSpollerBody(spollersBlock, hideSpollerBody = true) {
-    const spollerTitles = spollersBlock.querySelectorAll('[data-spoller]');
-    if (spollerTitles.length > 0) {
-      spollerTitles.forEach(spollerTitle => {
-        if (hideSpollerBody) {
-          spollerTitle.removeAttribute('tabindex');
-          if (!spollerTitle.classList.contains('_active')) {
-            spollerTitle.nextElementSibling.hidden = true;
-          }
+function initSpollerBody(spollersBlock, hideSpollerBody = true) {
+  const spollerTitles = spollersBlock.querySelectorAll('[data-spoller]');
+  if (spollerTitles.length > 0) {
+    spollerTitles.forEach(spollerTitle => {
+      const isLocked = spollersBlock.hasAttribute('data-spoller-lock');
+      if (hideSpollerBody) {
+        spollerTitle.removeAttribute('tabindex');
+        if (!spollerTitle.classList.contains('_active')) {
+          spollerTitle.nextElementSibling.hidden = true;
+          if (isLocked) spollerTitle.style.pointerEvents = 'all';
         } else {
-          spollerTitle.setAttribute('tabindex', '-1');
-          spollerTitle.nextElementSibling.hidden = false;
+          if (isLocked) spollerTitle.style.pointerEvents = 'none';
         }
-      });
-    }
+      } else {
+        spollerTitle.setAttribute('tabindex', '-1');
+        spollerTitle.nextElementSibling.hidden = false;
+        if (isLocked) {
+          if (spollerTitle.classList.contains('_active')) {
+            spollerTitle.style.pointerEvents = 'none';
+          } else {
+            spollerTitle.style.pointerEvents = 'all';
+          }
+        }
+      }
+    });
   }
-  function setSpollerAction(e) {
-    const el = e.target;
-    if (el.hasAttribute('data-spoller') || el.closest('[data-spoller]')) {
-      const spollerTitle = el.hasAttribute('data-spoller') ? el : el.closest('[data-spoller]');
-      const spollersBlock = spollerTitle.closest('[data-spollers]');
-      const oneSpoller = spollersBlock.hasAttribute('data-one-spoller') ? true : false;
-      if (!spollersBlock.querySelectorAll('._slide').length) {
-        if (oneSpoller && !spollerTitle.classList.contains('_active')) {
-          hideSpollersBody(spollersBlock);
+}
+
+function setSpollerAction(e) {
+  const el = e.target;
+  if (el.hasAttribute('data-spoller') || el.closest('[data-spoller]')) {
+    const spollerTitle = el.hasAttribute('data-spoller') ? el : el.closest('[data-spoller]');
+    const spollersBlock = spollerTitle.closest('[data-spollers]');
+    const oneSpoller = spollersBlock.hasAttribute('data-one-spoller');
+    const lockSpoller = spollersBlock.hasAttribute('data-spoller-lock');
+
+    if (!spollersBlock.querySelectorAll('._slide').length) {
+      const isActive = spollerTitle.classList.contains('_active');
+
+      if (oneSpoller && !isActive) {
+        hideSpollersBody(spollersBlock);
+      }
+
+      if (lockSpoller) {
+        if (!isActive) {
+          // Активируем новый
+          hideSpollersBody(spollersBlock, true); // Передаём lock = true
+          spollerTitle.classList.add('_active');
+          _slideDown(spollerTitle.nextElementSibling, 500);
+          spollerTitle.style.pointerEvents = 'none';
         }
+        // Иначе ничего не делаем
+      } else {
         spollerTitle.classList.toggle('_active');
         _slideToggle(spollerTitle.nextElementSibling, 500);
       }
+
       e.preventDefault();
     }
   }
-  function hideSpollersBody(spollersBlock) {
-    const spollerActiveTitle = spollersBlock.querySelector('[data-spoller]._active');
-    if (spollerActiveTitle) {
-      spollerActiveTitle.classList.remove('_active');
-      _slideUp(spollerActiveTitle.nextElementSibling, 500);
-    }
+}
+
+function hideSpollersBody(spollersBlock, fromLock = false) {
+  const spollerActiveTitle = spollersBlock.querySelector('[data-spoller]._active');
+  if (spollerActiveTitle) {
+    spollerActiveTitle.classList.remove('_active');
+    _slideUp(spollerActiveTitle.nextElementSibling, 500);
+    spollerActiveTitle.style.pointerEvents = 'all';
   }
+}
 }
 
 let _slideUp = (target, duration = 500) => {
