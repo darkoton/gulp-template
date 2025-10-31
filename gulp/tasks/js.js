@@ -1,5 +1,3 @@
-import fileInclude from 'gulp-file-include';
-
 export const js = () => {
   return app.gulp
     .src(`${app.path.srcFolder}/js/**/*.js`)

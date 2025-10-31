@@ -19,6 +19,7 @@ import { otfToTtf, ttfToWoff, iconfonts } from './gulp/tasks/fonts.js';
 import { server } from './gulp/tasks/server.js';
 import { minHTML, minCSS, minJS, minImg } from './gulp/tasks/minify.js';
 import { buildCSS } from './gulp/tasks/build.js';
+import { zip } from './gulp/tasks/zip.js';
 
 const taskSeries = {
   html: [html],
@@ -86,6 +87,6 @@ const buildMin = gulp.series(build, gulp.parallel(minHTML, minCSS, minJS, minImg
 
 gulp.task('dev', dev);
 
-gulp.task('build', build);
+gulp.task('build', gulp.series(build, zip));
 
-gulp.task('build-min', buildMin);
+gulp.task('build-min', gulp.series(buildMin, zip));
