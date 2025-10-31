@@ -3,6 +3,7 @@ import htmlmin from 'gulp-htmlmin';
 import cssmin from 'gulp-cssmin';
 import jsmin from 'gulp-jsmin';
 import imagemin from 'gulp-image';
+import gulpIf from 'gulp-if';
 
 export const minHTML = () => {
   return app.gulp
@@ -30,10 +31,6 @@ export const minImg = async () => {
 
   return app.gulp
     .src(`${app.path.buildFolder}/img/**/*.{jpg,png,jpeg,gif,webp,svg,avif}`)
-    .pipe(
-      imagemin({
-        pngquant: !Boolean(isVercel),
-      }),
-    )
+    .pipe(gulpIf(!isVercel, imagemin()))
     .pipe(app.gulp.dest(`${app.path.buildFolder}/img/`));
 };
