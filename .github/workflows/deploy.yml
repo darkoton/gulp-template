@@ -3,38 +3,37 @@ name: Gulp Deploy to Vercel
 on:
   push:
     branches: ['main']
-  pull_request:
-    branches: ['main']
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [22.x]
-
     steps:
       - uses: actions/checkout@v4
 
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 22
 
       - name: Install pngquant dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y build-essential libpng-dev
-          sudo apt-get install -y libimagequant-dev
+          sudo apt-get install -y build-essential libpng-dev libimagequant-dev
 
       - name: Install dependencies
         run: npm install
 
-      - name: Build
+      - name: Build project
         run: npm run build-min
 
-      - name: Deploy to Vercel
+      - name: Prepare Vercel Output Format
+        run: |
+          mkdir -p .vercel/output/static
+          cp -r dist/* .vercel/output/static
+          echo '{"version":3}' > .vercel/output/config.json
+
+      - name: Deploy to Vercel (Prebuilt)
         uses: amondnet/vercel-action@v25
         with:
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
@@ -42,4 +41,3 @@ jobs:
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
           working-directory: ./
           vercel-args: '--prebuilt'
-          prod: true
