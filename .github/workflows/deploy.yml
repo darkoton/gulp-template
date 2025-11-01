@@ -28,7 +28,6 @@ jobs:
           sudo apt-get install -y build-essential libpng-dev
           sudo apt-get install -y libimagequant-dev
 
-
       - name: Install dependencies
         run: npm install
 
@@ -42,4 +41,5 @@ jobs:
           vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
           working-directory: ./
+          vercel-args: '--prebuilt'
           prod: true
