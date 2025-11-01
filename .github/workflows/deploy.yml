@@ -33,11 +33,12 @@ jobs:
           cp -r dist/* .vercel/output/static
           echo '{"version":3}' > .vercel/output/config.json
 
-      - name: Deploy to Vercel (Prebuilt)
+      - name: Deploy to Vercel (Production Prebuilt)
         uses: amondnet/vercel-action@v25
         with:
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
           vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
           working-directory: ./
-          vercel-args: '--prebuilt'
+          vercel-args: '--prebuilt --prod'
+          github-deployment: true
