@@ -87,6 +87,8 @@ const buildMin = gulp.series(build, gulp.parallel(minHTML, minCSS, minJS));
 
 gulp.task('dev', dev);
 
+gulp.task('start', server);
+
 gulp.task('build', gulp.series(build, zip));
 
 gulp.task('build-min', gulp.series(buildMin, zip));
