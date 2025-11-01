@@ -29,8 +29,11 @@ export const minJS = () => {
 export const minImg = async () => {
   const isVercel = process.env.VERCEL;
 
-  return app.gulp
-    .src(`${app.path.buildFolder}/img/**/*.{jpg,png,jpeg,gif,webp,svg,avif}`)
-    .pipe(gulpIf(!isVercel, imagemin()))
-    .pipe(app.gulp.dest(`${app.path.buildFolder}/img/`));
+  return (
+    app.gulp
+      .src(`${app.path.buildFolder}/img/**/*.{jpg,png,jpeg,gif,webp,svg,avif}`)
+      .pipe(imagemin())
+      // .pipe(gulpIf(!isVercel, imagemin()))
+      .pipe(app.gulp.dest(`${app.path.buildFolder}/img/`))
+  );
 };
