@@ -81,9 +81,9 @@ const buildTasks = gulp.series(buildCSS);
 
 const dev = gulp.series(reset, mainTasks, gulp.parallel(watcher, server));
 
-const build = gulp.series(reset, mainTasks, buildTasks);
+const build = gulp.series(reset, mainTasks, buildTasks, minImg);
 
-const buildMin = gulp.series(build, gulp.parallel(minHTML, minCSS, minJS, minImg));
+const buildMin = gulp.series(build, gulp.parallel(minHTML, minCSS, minJS));
 
 gulp.task('dev', dev);
 
