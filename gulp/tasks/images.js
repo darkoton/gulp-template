@@ -35,7 +35,7 @@ export const webpImages = () =>
 
 export const copyImages = () => {
   return app.gulp
-    .src(`${app.path.srcFolder}/img/**/*.{jpg,png,jpeg,gif,webp}`)
+    .src(`${app.path.srcFolder}/img/**/*.{jpg,png,jpeg,gif,webp,svg}`)
     .pipe(app.gulp.dest(`${app.path.buildFolder}/img/`))
     .pipe(app.plugins.browsersync.stream());
 };
