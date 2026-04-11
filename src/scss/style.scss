@@ -4,19 +4,16 @@
 //< " MIXINS " >=============================================================================================================>//
 @import './modules/_mixins';
 
-//< " FILE WITH VARIABLES " >=============================================================================================================>//
-@import './modules/_vars';
-
-//< " body SITE " >=============================================================================================================>//
+//< " SITE " >=============================================================================================================>//
 
 html {
   @include scrollbar(8px, #999, #fff, 10px);
 }
 
 body {
-  background-color: $colorBg;
-  font-family: $fontFamily;
-  color: $colorDark;
+  background-color: var(--white);
+  font-family: var(--font-arial);
+  color: var(--color-dark);
   font-size: 14px;
 
   // ._lock-scroll
@@ -42,9 +39,9 @@ body {
 
 // ._container
 ._container {
-  padding: 0px #{calc($containerPadding / 2) + px};
+  padding: 0px var(--container-padding);
   margin: 0px auto;
-  max-width: $maxWidthContainer + px;
+  max-width: var(--max-width-container);
 }
 
 //< " FILES COMPONENTS " >=============================================================================================================>//

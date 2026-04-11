@@ -1,6 +1,10 @@
 :root {
-  --white-rgb: 255, 255, 255;
   --white: #fff;
+  --dark: #000;
 
-  --font-arial: 'Arial';
+  --font-arial:
+    Arial, 'Helvetica Neue', Helvetica, sans-serif;
+
+  --max-width-container: 1200px;
+  --container-padding: 15px;
 }
