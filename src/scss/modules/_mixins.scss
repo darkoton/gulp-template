@@ -1,16 +1,29 @@
-@use "sass:math";
+@use 'sass:math';
 
 //< " RESPONSIVE PROPERTY " >=============================================================================================================>//
-@mixin fluid($property, $max, $min, $min-screen: 320px, $max-screen: 430px) {
+@mixin fluid(
+  $property,
+  $max,
+  $min,
+  $min-screen: 320px,
+  $max-screen: 430px
+) {
   & {
     #{$property}: #{$max};
   }
 
   @media (max-width: #{$max-screen}) {
     $value-range: math.div($min - $max, 1px);
-    $screen-range: math.div($max-screen - $min-screen, 1px);
+    $screen-range: math.div(
+      $max-screen - $min-screen,
+      1px
+    );
 
-    #{$property}: calc(#{$min} - #{$value-range} * (100vw - #{$min-screen}) / #{$screen-range});
+    #{$property}: calc(
+      #{$min} - #{$value-range} *
+        (100vw - #{$min-screen}) /
+        #{$screen-range}
+    );
   }
 
   @media (max-width: #{$min-screen}) {
@@ -18,73 +31,90 @@
   }
 }
 
-//< " GRADIENT BORDER/FONT " >=============================================================================================================>//
+//< " BORDER GRADIENT " >
+@mixin border-gradient(
+  $gradient,
+  $width: 0px,
+  $radius: 0px,
+  $bg: false,
+  $hover-bg: null
+) {
+  --gradient: #{$gradient};
+  --width: #{$width};
+  --radius: #{$radius};
 
-//< " border " >
-@mixin border-gradient($dir: 0deg, $from, $to, $borderRadius: 0px, $opacity: 1) {
   position: relative;
-  background: transparent;
   overflow: hidden;
   z-index: 0;
-  border-radius: $borderRadius;
+  border-radius: var(--radius);
 
-  &::before {
-    content: "";
-    position: absolute;
-    z-index: -1;
-    inset: 0px;
-    background: linear-gradient($dir, $from 2.29%, color-mix(in srgb, $from, $to), 49.7%, $to 68.56%);
-    padding: 2px;
-    border-radius: $borderRadius;
-    -webkit-mask:
-      linear-gradient(rgb(255, 255, 255) 0px, rgb(255, 255, 255) 0px) content-box content-box,
-      linear-gradient(rgb(255, 255, 255) 0px, rgb(255, 255, 255) 0px);
-    -webkit-mask-composite: xor;
-    transition: all 0.3s ease 0s;
-  }
+  &::before,
   &::after {
-    content: "";
-    background: linear-gradient($dir, $from 2.29%, color-mix(in srgb, $from, $to) 49.7%, $to 68.56%);
-    -webkit-mask:
-      linear-gradient(#fff 0 0) content-box,
-      linear-gradient(#fff 0 0);
-    mask:
-      linear-gradient(#fff 0 0) content-box,
-      linear-gradient(#fff 0 0);
+    content: '';
     position: absolute;
     width: 100%;
     height: 100%;
     left: 0;
     top: 0;
     z-index: -1;
-    transition: all 0.3s ease 0s;
-    opacity: $opacity;
+    transition: opacity 0.3s ease 0s;
+
+    background: var(--gradient);
   }
 
-  // @media (any-hover: hover) {
-  //   cursor: pointer;
-  //   transition: all 0.3s ease 0s;
-  //   &:hover {
-  //     &::after {
-  //       @if $opacity==1 {
-  //         opacity: 0;
-  //       } @else if $opacity==0 {
-  //         opacity: 1;
-  //       }
-  //     }
-  //   }
-  // }
+  &::before {
+    padding: var(--width);
+    border-radius: var(--radius);
+    -webkit-mask:
+      linear-gradient(
+          rgb(255, 255, 255) 0px,
+          rgb(255, 255, 255) 0px
+        )
+        content-box content-box,
+      linear-gradient(
+        rgb(255, 255, 255) 0px,
+        rgb(255, 255, 255) 0px
+      );
+    -webkit-mask-composite: xor;
+  }
+
+  &::after {
+    -webkit-mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+
+    opacity: if($bg, 1, 0);
+  }
+
+  @if $hover-bg !=null {
+    @media (any-hover: hover) {
+      &:hover::after {
+        opacity: if($hover-bg, 1, 0);
+      }
+    }
+  }
 }
 
-//< " FONT " >
+//< " FONT GRADIENT " >
 @mixin font-gradient($dir, $colors...) {
-  background: -webkit-linear-gradient($dir, $colors);
+  background: -webkit-linear-gradient(
+    $dir,
+    $colors
+  );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 //< " SCROLLBAR " >
-@mixin scrollbars($size: 10px, $foreground-color: #999, $background-color: #333, $border-radius: 0px) {
+@mixin scrollbars(
+  $size: 10px,
+  $foreground-color: #999,
+  $background-color: #333,
+  $border-radius: 0px
+) {
   // For Chrome & Safari
   &::-webkit-scrollbar {
     width: $size;
@@ -99,5 +129,6 @@
   }
 
   // Standard version (Firefox only for now)
-  scrollbar-color: $foreground-color $background-color;
+  scrollbar-color: $foreground-color
+    $background-color;
 }
