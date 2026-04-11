@@ -1,22 +1,23 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+  <head>
+    @@include("components/head.html", { "title":
+    "Gulp-template" })
+  </head>
 
-@@include("components/head.html", {
-"title": "Gulp-template"
-})
+  <body>
+    <!-- @@include("components/preloader.html") -->
 
-<body>
-  <!-- @@include("components/preloader.html") -->
-
-  <div class="wrapper">
-    <div class="content">
-      @@include("components/header.html")
-      <main class="page">
-      </main>
+    <div class="wrapper">
+      <div class="content">
+        @@include("components/header.html")
+        <main class="page"></main>
+      </div>
+      @@include("components/footer.html")
     </div>
-    @@include("components/footer.html")
-  </div>
-  <script src="js/app.js" type="module"></script>
-</body>
-
+    <script
+      src="js/app.js"
+      type="module"
+    ></script>
+  </body>
 </html>
