@@ -8,6 +8,11 @@
 @import './modules/_vars';
 
 //< " body SITE " >=============================================================================================================>//
+
+html {
+  @include scrollbar(8px, #999, #fff, 10px);
+}
+
 body {
   background-color: $colorBg;
   font-family: $fontFamily;
