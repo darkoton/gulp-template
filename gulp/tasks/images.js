@@ -1,7 +1,9 @@
 import gulp from 'gulp';
-import webp from 'gulp-webp';
-import avif from 'gulp-avif';
 import settings from '../config/settings.js';
+import {
+  convertImageToWebP,
+  convertImageToAvif,
+} from '../plugins/sharp.js';
 
 export const avifImages = () =>
   app.gulp
@@ -14,8 +16,13 @@ export const avifImages = () =>
         }),
       ),
     )
-    .pipe(app.plugins.newer({ dest: `${app.path.buildFolder}/img/`, ext: '.avif' }))
-    .pipe(avif())
+    .pipe(
+      app.plugins.newer({
+        dest: `${app.path.buildFolder}/img/`,
+        ext: '.avif',
+      }),
+    )
+    .pipe(convertImageToAvif())
     .pipe(app.gulp.dest(`${app.path.buildFolder}/img/`));
 
 export const webpImages = () =>
@@ -29,8 +36,13 @@ export const webpImages = () =>
         }),
       ),
     )
-    .pipe(app.plugins.newer({ dest: `${app.path.buildFolder}/img/`, ext: '.webp' }))
-    .pipe(webp())
+    .pipe(
+      app.plugins.newer({
+        dest: `${app.path.buildFolder}/img/`,
+        ext: '.webp',
+      }),
+    )
+    .pipe(convertImageToWebP())
     .pipe(app.gulp.dest(`${app.path.buildFolder}/img/`));
 
 export const copyImages = () => {

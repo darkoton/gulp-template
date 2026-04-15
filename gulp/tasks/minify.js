@@ -2,7 +2,7 @@
 import htmlmin from 'gulp-htmlmin';
 import cssmin from 'gulp-cssmin';
 import jsmin from 'gulp-jsmin';
-import imagemin from 'gulp-image';
+import { optimizeImage } from '../plugins/sharp.js';
 
 export const minHTML = () => {
   return app.gulp
@@ -27,7 +27,9 @@ export const minJS = () => {
 
 export const minImg = async () => {
   return app.gulp
-    .src(`${app.path.buildFolder}/img/**/*.{jpg,png,jpeg,gif,webp,svg,avif}`)
-    .pipe(imagemin())
+    .src(
+      `${app.path.buildFolder}/img/**/*.{jpg,png,jpeg,gif,webp,svg,avif}`,
+    )
+    .pipe(optimizeImage())
     .pipe(app.gulp.dest(`${app.path.buildFolder}/img/`));
 };

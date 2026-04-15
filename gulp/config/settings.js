@@ -1,5 +1,8 @@
 import tailwindModule from './packages/tailwind/tasks/module.js';
-import { tailwindHTML_CDN, tailwindJS_CDN } from './packages/tailwind/tasks/cdn.js';
+import {
+  tailwindHTML_CDN,
+  tailwindJS_CDN,
+} from './packages/tailwind/tasks/cdn.js';
 
 export default {
   packages: {
@@ -24,7 +27,7 @@ export default {
   },
   gulp: {
     images: {
-      mode: 'webp', // 'all' || 'webp' || 'avif'  - Image optimization configuration
+      mode: 'all', // 'all' || 'webp' || 'avif'  - Image optimization configuration
     },
   },
 };

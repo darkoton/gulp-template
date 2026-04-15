@@ -28,7 +28,11 @@ const taskSeries = {
   images: [images],
 };
 
-for (let index = 0; index < Object.keys(settings.packages).length; index++) {
+for (
+  let index = 0;
+  index < Object.keys(settings.packages).length;
+  index++
+) {
   const key = Object.keys(settings.packages)[index];
   const packageConfig = settings.packages[key];
 
@@ -59,9 +63,18 @@ function watcher() {
     `${path.srcFolder}/img/**/*.{png,jpeg,jpg,gif,webp,svg}`,
     gulp.series(...taskSeries.images),
   );
-  gulp.watch(`${path.srcFolder}/html/**/*.html`, gulp.series(...taskSeries.html));
-  gulp.watch(`${path.srcFolder}/scss/**/*.scss`, gulp.series(...taskSeries.style));
-  gulp.watch(`${path.srcFolder}/js/**/*.js`, gulp.series(...taskSeries.js));
+  gulp.watch(
+    `${path.srcFolder}/html/**/*.html`,
+    gulp.series(...taskSeries.html),
+  );
+  gulp.watch(
+    `${path.srcFolder}/scss/**/*.scss`,
+    gulp.series(...taskSeries.style),
+  );
+  gulp.watch(
+    `${path.srcFolder}/js/**/*.js`,
+    gulp.series(...taskSeries.js),
+  );
 }
 
 const fonts = gulp.series(otfToTtf, ttfToWoff, iconfonts);
