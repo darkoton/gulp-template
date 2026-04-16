@@ -1,9 +1,8 @@
 import fileinclude from 'gulp-file-include';
-import webphtml from 'gulp-webp-html-nosvg';
-import avifWebpHTML from 'gulp-avif-webp-html';
+import avifWebpHTML from 'gulp-avif-webp-html-universal';
 import gulpif from 'gulp-if';
 import prettify from 'gulp-prettify';
-import settings from '../config/settings.js';
+import { config } from '../configs/config.js';
 
 export const html = () => {
   return app.gulp
@@ -17,9 +16,12 @@ export const html = () => {
       ),
     )
     .pipe(fileinclude())
-    .pipe(gulpif(settings.gulp.images.mode === 'avif', avifWebpHTML())) // Needs to be fixed in the future
-    .pipe(gulpif(settings.gulp.images.mode === 'webp', webphtml()))
-    .pipe(gulpif(settings.gulp.images.mode === 'all', avifWebpHTML()))
+    .pipe(
+      avifWebpHTML({
+        webp: config.images.webp.enabled,
+        avif: config.images.avif.enabled,
+      }),
+    )
     .pipe(
       prettify({
         indent_size: 2,

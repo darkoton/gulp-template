@@ -1,7 +1,7 @@
 import gulp from 'gulp';
-import { path } from './gulp/config/path.js';
-import { plugins } from './gulp/config/plugins.js';
-import settings from './gulp/config/settings.js';
+import { path } from './gulp/configs/path.js';
+import { plugins } from './gulp/configs/plugins.js';
+import { config } from './gulp/configs/config.js';
 
 global.app = {
   gulp: gulp,
@@ -28,34 +28,30 @@ const taskSeries = {
   images: [images],
 };
 
-for (
-  let index = 0;
-  index < Object.keys(settings.packages).length;
-  index++
-) {
-  const key = Object.keys(settings.packages)[index];
-  const packageConfig = settings.packages[key];
+// for (let index = 0; index < Object.keys(config.packages).length; index++) {
+//   const key = Object.keys(config.packages)[index];
+//   const packageConfig = config.packages[key];
 
-  let type = 'module';
-  const tasks = {};
-  if (packageConfig.enable) {
-    if (packageConfig.config.type === 'cdn') {
-      type = 'cdn';
-    } else if (packageConfig.config.type === 'module') {
-      type = 'module';
-    }
-    Object.assign(tasks, packageConfig.tasks[type]);
-  }
+//   let type = 'module';
+//   const tasks = {};
+//   if (packageConfig.enable) {
+//     if (packageConfig.config.type === 'cdn') {
+//       type = 'cdn';
+//     } else if (packageConfig.config.type === 'module') {
+//       type = 'module';
+//     }
+//     Object.assign(tasks, packageConfig.tasks[type]);
+//   }
 
-  for (let i = 0; i < Object.keys(tasks).length; i++) {
-    const taskKey = Object.keys(tasks)[i];
-    const task = tasks[taskKey];
+//   for (let i = 0; i < Object.keys(tasks).length; i++) {
+//     const taskKey = Object.keys(tasks)[i];
+//     const task = tasks[taskKey];
 
-    if (task) {
-      taskSeries[taskKey].push(task);
-    }
-  }
-}
+//     if (task) {
+//       taskSeries[taskKey].push(task);
+//     }
+//   }
+// }
 
 function watcher() {
   gulp.watch(`${path.srcFolder}/assets/`, copy);

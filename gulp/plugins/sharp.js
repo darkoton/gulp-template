@@ -1,6 +1,7 @@
 import { Transform } from 'stream';
 import sharp from 'sharp';
 import path from 'path';
+import { config } from '../configs/config.js';
 
 export function convertImageToWebP() {
   return new Transform({
@@ -13,7 +14,9 @@ export function convertImageToWebP() {
       // Work with Buffer contents
       if (file.isBuffer()) {
         try {
-          file.contents = await sharp(file.contents).webp().toBuffer();
+          file.contents = await sharp(file.contents, { animated: true })
+            .webp()
+            .toBuffer();
           file.path = file.path.replace(path.extname(file.path), '.webp');
           callback(null, file);
         } catch (err) {
@@ -67,25 +70,30 @@ export function optimizeImage() {
             case '.jpeg':
               optimized = await sharp(file.contents)
                 .jpeg({
-                  quality: 80,
-                  progressive: true,
+                  quality: config.images.jpeg?.quality ?? 80,
+                  progressive: config.images.jpeg?.progressive ?? true,
                 })
                 .toBuffer();
               break;
             case '.png':
               optimized = await sharp(file.contents)
                 .png({
-                  compressionLevel: 9,
+                  compressionLevel:
+                    config.images.png?.compressionLevel ?? 9,
                 })
                 .toBuffer();
               break;
             case '.webp':
               optimized = await sharp(file.contents)
                 .webp({
-                  quality: 80,
+                  quality: config.images.webp?.quality ?? 80,
                 })
                 .toBuffer();
               break;
+            case '.avif':
+              optimized = await sharp(file.contents).avif({
+                quality: config.images.avif?.quality ?? 80,
+              });
             case '.gif':
               optimized = await sharp(file.contents, { animated: true })
                 .gif({
