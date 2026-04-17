@@ -5,10 +5,15 @@ import {
   convertImageToAvif,
 } from '../plugins/sharp.js';
 
-const createImagesTask = ({ title, ext, convertor }) => {
-  return () =>
+const createImagesTask = ({
+  title,
+  ext,
+  convertor,
+  name = 'createImagesTask',
+}) => {
+  const task = () =>
     app.gulp
-      .src(`${app.path.srcFolder}/img/**/*.{jpg,png,jpeg}`)
+      .src(`${app.paths.srcImages}/**/*.{jpg,png,jpeg}`)
       .pipe(
         app.plugins.plumber(
           app.plugins.notify.onError({
@@ -19,30 +24,36 @@ const createImagesTask = ({ title, ext, convertor }) => {
       )
       .pipe(
         app.plugins.newer({
-          dest: `${app.path.buildFolder}/img/`,
+          dest: app.paths.buildImages,
           ext,
         }),
       )
       .pipe(convertor())
-      .pipe(app.gulp.dest(`${app.path.buildFolder}/img/`));
+      .pipe(app.gulp.dest(app.paths.buildImages));
+
+  Object.defineProperty(task, 'name', { value: name });
+
+  return task;
 };
 
 export const imagesAvif = createImagesTask({
   title: 'IMAGES AVIF',
   ext: '.avif',
   convertor: convertImageToAvif,
+  name: 'imagesAvif',
 });
 
 export const imagesWebp = createImagesTask({
   title: 'IMAGES WEBP',
   ext: '.webp',
   convertor: convertImageToWebP,
+  name: 'imagesWebp',
 });
 
 export const imagesCopy = () => {
   return app.gulp
-    .src(`${app.path.srcFolder}/img/**/*.{jpg,png,jpeg,webp,gif,svg}`)
-    .pipe(app.gulp.dest(`${app.path.buildFolder}/img/`))
+    .src(app.paths.globs.images)
+    .pipe(app.gulp.dest(app.paths.buildImages))
     .pipe(app.plugins.browsersync.stream());
 };
 

@@ -10,7 +10,7 @@ const replacement = `<!-- CDN -->
 
 export function tailwindHTML_CDN() {
   return app.gulp
-    .src(`${app.path.buildFolder}/*.html`, { sourcemaps: true })
+    .src(`${app.paths.buildFolder}/*.html`, { sourcemaps: true })
     .pipe(
       app.plugins.plumber(
         app.plugins.notify.onError({
@@ -20,13 +20,15 @@ export function tailwindHTML_CDN() {
       ),
     )
     .pipe(replace('<!-- CDN -->', replacement))
-    .pipe(app.gulp.dest(`${app.path.buildFolder}/`))
+    .pipe(app.gulp.dest(`${app.paths.buildFolder}/`))
     .pipe(app.plugins.browsersync.stream());
 }
 
 export function tailwindJS_CDN() {
   return app.gulp
-    .src(`${app.path.rootFolder}/tailwind.config.json`, { sourcemaps: true })
+    .src(`${app.paths.root}/tailwind.config.json`, {
+      sourcemaps: true,
+    })
     .pipe(
       app.plugins.plumber(
         app.plugins.notify.onError({
@@ -43,6 +45,6 @@ export function tailwindJS_CDN() {
     )
     .pipe(replace(/^{/, 'tailwind.config = {'))
     .pipe(replace(/}$/, '};'))
-    .pipe(app.gulp.dest(`${app.path.buildFolder}/js/`))
+    .pipe(app.gulp.dest(`${app.paths.buildFolder}/js/`))
     .pipe(app.plugins.browsersync.stream());
 }

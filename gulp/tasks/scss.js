@@ -7,7 +7,7 @@ const sass = gulpSass(dartSass);
 
 export const scss = () => {
   return app.gulp
-    .src(`${app.path.srcFolder}/scss/*.scss`, { soursemaps: true })
+    .src(app.paths.globs.styles, { soursemaps: true })
     .pipe(
       app.plugins.plumber(
         app.plugins.notify.onError({
@@ -21,7 +21,12 @@ export const scss = () => {
         outputStyle: 'expanded',
       }),
     )
-    .pipe(gulpIf(file => file.basename !== 'tailwind.css', groupCssMediaQueries()))
-    .pipe(app.gulp.dest(`${app.path.buildFolder}/css/`))
+    .pipe(
+      gulpIf(
+        file => file.basename !== 'tailwind.css',
+        groupCssMediaQueries(),
+      ),
+    )
+    .pipe(app.gulp.dest(app.paths.buildStyles))
     .pipe(app.plugins.browsersync.stream());
 };

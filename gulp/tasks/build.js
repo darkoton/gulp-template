@@ -15,7 +15,7 @@ const imagesMode = () => {
 
 export const buildCSS = () => {
   return app.gulp
-    .src(`${app.path.buildFolder}/css/*.css`)
+    .src(app.paths.globs.stylesBuild)
     .pipe(
       gulpif(
         imagesMode(),
@@ -31,5 +31,5 @@ export const buildCSS = () => {
         cascade: true,
       }),
     )
-    .pipe(app.gulp.dest(`${app.path.buildFolder}/css/`));
+    .pipe(app.gulp.dest(app.paths.buildStyles));
 };

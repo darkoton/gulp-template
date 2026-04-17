@@ -1,11 +1,11 @@
 import gulp from 'gulp';
-import { path } from './gulp/configs/path.js';
+import { paths } from './gulp/configs/paths.js';
 import { plugins } from './gulp/configs/plugins.js';
 import { config } from './gulp/configs/config.js';
 
 global.app = {
   gulp: gulp,
-  path: path,
+  paths: paths,
   plugins: plugins,
 };
 
@@ -15,7 +15,7 @@ import { html } from './gulp/tasks/html.js';
 import { scss } from './gulp/tasks/scss.js';
 import { js } from './gulp/tasks/js.js';
 import { images } from './gulp/tasks/images.js';
-import { otfToTtf, ttfToWoff, iconfonts } from './gulp/tasks/fonts.js';
+// import { otfToTtf, ttfToWoff, iconfonts } from './gulp/tasks/fonts.js';
 import { server } from './gulp/tasks/server.js';
 import { minHTML, minCSS, minJS, minImg } from './gulp/tasks/minify.js';
 import { buildCSS } from './gulp/tasks/build.js';
@@ -23,7 +23,7 @@ import { zip } from './gulp/tasks/zip.js';
 
 const taskSeries = {
   html: [html],
-  style: [scss],
+  styles: [scss],
   js: [js],
   images: [images],
 };
@@ -53,34 +53,28 @@ const taskSeries = {
 //   }
 // }
 
+// ─────────────────────────────────────────────────────────────
+// Watch
+// ─────────────────────────────────────────────────────────────
+
+const { globs } = paths;
+
 function watcher() {
-  gulp.watch(`${path.srcFolder}/assets/`, copy);
-  gulp.watch(
-    `${path.srcFolder}/img/**/*.{png,jpeg,jpg,gif,webp,svg}`,
-    gulp.series(...taskSeries.images),
-  );
-  gulp.watch(
-    `${path.srcFolder}/html/**/*.html`,
-    gulp.series(...taskSeries.html),
-  );
-  gulp.watch(
-    `${path.srcFolder}/scss/**/*.scss`,
-    gulp.series(...taskSeries.style),
-  );
-  gulp.watch(
-    `${path.srcFolder}/js/**/*.js`,
-    gulp.series(...taskSeries.js),
-  );
+  gulp.watch(globs.assets, copy);
+  gulp.watch(globs.images, gulp.series(...taskSeries.images));
+  gulp.watch(globs.html, gulp.series(...taskSeries.html));
+  gulp.watch(globs.stylesWatch, gulp.series(...taskSeries.styles));
+  gulp.watch(globs.scripts, gulp.series(...taskSeries.js));
 }
 
-const fonts = gulp.series(otfToTtf, ttfToWoff, iconfonts);
+// const fonts = gulp.series(otfToTtf, ttfToWoff, iconfonts);
 
 const mainTasks = gulp.series(
-  fonts,
+  // fonts,
   gulp.parallel(
     copy,
     gulp.series(...taskSeries.html),
-    gulp.series(...taskSeries.style),
+    gulp.series(...taskSeries.styles),
     gulp.series(...taskSeries.js),
     gulp.series(...taskSeries.images),
   ),

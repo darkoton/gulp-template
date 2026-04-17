@@ -6,30 +6,28 @@ import { optimizeImage } from '../plugins/sharp.js';
 
 export const minHTML = () => {
   return app.gulp
-    .src(`${app.path.buildFolder}/*.html`)
+    .src(app.paths.globs.htmlBuild)
     .pipe(htmlmin({ collapseWhitespace: true }))
-    .pipe(app.gulp.dest(`${app.path.buildFolder}/`));
+    .pipe(app.gulp.dest(app.paths.build));
 };
 
 export const minCSS = () => {
   return app.gulp
-    .src(`${app.path.buildFolder}/css/*.css`)
+    .src(app.paths.globs.stylesBuild)
     .pipe(cssmin())
-    .pipe(app.gulp.dest(`${app.path.buildFolder}/css/`));
+    .pipe(app.gulp.dest(app.paths.buildStyles));
 };
 
 export const minJS = () => {
   return app.gulp
-    .src(`${app.path.buildFolder}/js/**/*.js`)
+    .src(app.paths.globs.scripts)
     .pipe(jsmin())
-    .pipe(app.gulp.dest(`${app.path.buildFolder}/js/`));
+    .pipe(app.gulp.dest(app.paths.buildScripts));
 };
 
 export const minImg = async () => {
   return app.gulp
-    .src(
-      `${app.path.buildFolder}/img/**/*.{jpg,png,jpeg,gif,webp,svg,avif}`,
-    )
+    .src(app.paths.globs.images)
     .pipe(optimizeImage())
-    .pipe(app.gulp.dest(`${app.path.buildFolder}/img/`));
+    .pipe(app.gulp.dest(app.paths.buildImages));
 };

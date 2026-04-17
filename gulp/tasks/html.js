@@ -6,7 +6,7 @@ import { config } from '../configs/config.js';
 
 export const html = () => {
   return app.gulp
-    .src(`${app.path.srcFolder}/html/*.html`, { soursemaps: true })
+    .src(app.paths.globs.htmlPages, { soursemaps: true })
     .pipe(
       app.plugins.plumber(
         app.plugins.notify.onError({
@@ -31,6 +31,6 @@ export const html = () => {
         unformatted: ['pre', 'code'],
       }),
     )
-    .pipe(app.gulp.dest(`${app.path.buildFolder}/`))
+    .pipe(app.gulp.dest(app.paths.build))
     .pipe(app.plugins.browsersync.stream());
 };

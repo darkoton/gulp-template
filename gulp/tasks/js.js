@@ -1,6 +1,6 @@
 export const js = () => {
   return app.gulp
-    .src(`${app.path.srcFolder}/js/**/*.js`)
-    .pipe(app.gulp.dest(`${app.path.buildFolder}/js`))
+    .src(app.paths.globs.scripts)
+    .pipe(app.gulp.dest(app.paths.buildScripts))
     .pipe(app.plugins.browsersync.stream());
 };

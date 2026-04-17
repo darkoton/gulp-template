@@ -6,7 +6,7 @@ import autoprefixer from 'autoprefixer';
 
 export default function tailwindModule() {
   return app.gulp
-    .src(`${app.path.buildFolder}/css/*.css`, { sourcemaps: true })
+    .src(`${app.paths.buildFolder}/css/*.css`, { sourcemaps: true })
     .pipe(
       app.plugins.plumber(
         app.plugins.notify.onError({
@@ -16,6 +16,6 @@ export default function tailwindModule() {
       ),
     )
     .pipe(postcss([tailwindCSS('./tailwind.config.json'), autoprefixer()]))
-    .pipe(app.gulp.dest(`${app.path.buildFolder}/css/`))
+    .pipe(app.gulp.dest(`${app.paths.buildFolder}/css/`))
     .pipe(app.plugins.browsersync.stream());
 }
