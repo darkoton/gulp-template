@@ -74,9 +74,9 @@ const mainTasks = gulp.series(
   gulp.parallel(
     copy,
     gulp.series(...taskSeries.html),
-    gulp.series(...taskSeries.styles),
-    gulp.series(...taskSeries.js),
-    gulp.series(...taskSeries.images),
+    // gulp.series(...taskSeries.styles),
+    // gulp.series(...taskSeries.js),
+    // gulp.series(...taskSeries.images),
   ),
 );
 
