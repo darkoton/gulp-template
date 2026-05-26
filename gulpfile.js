@@ -1,14 +1,22 @@
+/**
+ * Gulpfile
+ */
+
 import gulp from 'gulp';
+
+// Configuration
 import { paths } from './gulp/configs/paths.js';
 import { plugins } from './gulp/configs/plugins.js';
 import { config } from './gulp/configs/config.js';
 
+// Global app object
 global.app = {
   gulp: gulp,
   paths: paths,
   plugins: plugins,
 };
 
+// Tasks
 import { copy } from './gulp/tasks/copy.js';
 import { reset } from './gulp/tasks/reset.js';
 import { html } from './gulp/tasks/html.js';
@@ -75,8 +83,8 @@ const mainTasks = gulp.series(
     copy,
     gulp.series(...taskSeries.html),
     gulp.series(...taskSeries.styles),
-    // gulp.series(...taskSeries.js),
-    // gulp.series(...taskSeries.images),
+    gulp.series(...taskSeries.js),
+    gulp.series(...taskSeries.images),
   ),
 );
 

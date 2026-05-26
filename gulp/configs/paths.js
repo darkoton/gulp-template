@@ -66,6 +66,9 @@ const globs = {
   stylesBuild: `${computedPaths.buildStyles}/**/*.${extensions.css}`,
   stylesWatch: `${computedPaths.srcStyles}/**/*.${extensions.styles}`,
   scripts: `${computedPaths.srcScripts}/**/*.${extensions.scripts}`,
+  scriptsGlob: `${computedPaths.srcScripts}/*.${extensions.scripts}`,
+  scriptsBuild: `${computedPaths.buildScripts}/**/*.${extensions.scripts}`,
+  scriptsWatch: `${computedPaths.srcScripts}/**/*.${extensions.scripts}`,
   images: `${computedPaths.srcImages}/**/*.${extensions.images}`,
   sprites: `${computedPaths.srcSprites}/**/*.${extensions.sprites}`,
   assets: [

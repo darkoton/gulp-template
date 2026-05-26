@@ -3,6 +3,7 @@ import avifWebpHTML from 'gulp-avif-webp-html-universal';
 import gulpif from 'gulp-if';
 import prettify from 'gulp-prettify';
 import { config } from '../configs/config.js';
+import replace from 'gulp-replace';
 
 export const html = () => {
   return app.gulp
@@ -21,6 +22,12 @@ export const html = () => {
         webp: config.images.webp.enabled,
         avif: config.images.avif.enabled,
       }),
+    )
+    .pipe(
+      gulpif(
+        config.scripts.type === 'scripts',
+        replace(/type="module"/g, ''),
+      ),
     )
     .pipe(
       prettify({

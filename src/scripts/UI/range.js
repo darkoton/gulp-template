@@ -1,6 +1,7 @@
 // Range Slider Component
 
-/* <div class="range">
+/* Example:
+ <div class="range">
   <div class="range-inputs">
     <input
       class="range-input-min"

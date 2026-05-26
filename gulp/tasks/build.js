@@ -2,8 +2,8 @@ import { config } from '../configs/config.js';
 import gulpif from 'gulp-if';
 
 //CSS
-import ImagesCSS from 'gulp-web-images-css'; // Вывод WEBP изображений
-import autoPrefixer from 'gulp-autoprefixer'; // Добавление вендорых префиксов
+import ImagesCSS from 'gulp-web-images-css'; // WebP image output
+import autoPrefixer from 'gulp-autoprefixer'; // Adding vendor prefixes
 
 const imagesMode = () => {
   if (config.images.webp.enabled && config.images.avif.enabled)
@@ -32,4 +32,25 @@ export const buildCSS = () => {
       }),
     )
     .pipe(app.gulp.dest(app.paths.buildStyles));
+};
+
+//JS
+
+export const buildJS = () => {
+  return app.gulp
+    .src(app.paths.globs.scriptsBuild)
+    .pipe(
+      gulpif(
+        config.scripts.type === 'scripts',
+        gulpEsbuild({
+          bundle: true,
+          format: 'iife',
+          minify: false,
+          target: 'es2020',
+          sourcemap: false,
+          charset: 'utf8',
+        }),
+      ),
+    )
+    .pipe(app.gulp.dest(app.paths.buildScripts));
 };
