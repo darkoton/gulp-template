@@ -14,14 +14,10 @@
 
   @media (max-width: #{$max-screen}) {
     $value-range: math.div($min - $max, 1px);
-    $screen-range: math.div(
-      $max-screen - $min-screen,
-      1px
-    );
+    $screen-range: math.div($max-screen - $min-screen, 1px);
 
     #{$property}: calc(
-      #{$min} - #{$value-range} *
-        (100vw - #{$min-screen}) /
+      #{$min} - #{$value-range} * (100vw - #{$min-screen}) /
         #{$screen-range}
     );
   }
@@ -66,15 +62,9 @@
     padding: var(--width);
     border-radius: var(--radius);
     -webkit-mask:
-      linear-gradient(
-          rgb(255, 255, 255) 0px,
-          rgb(255, 255, 255) 0px
-        )
+      linear-gradient(rgb(255, 255, 255) 0px, rgb(255, 255, 255) 0px)
         content-box content-box,
-      linear-gradient(
-        rgb(255, 255, 255) 0px,
-        rgb(255, 255, 255) 0px
-      );
+      linear-gradient(rgb(255, 255, 255) 0px, rgb(255, 255, 255) 0px);
     -webkit-mask-composite: xor;
   }
 
@@ -86,13 +76,13 @@
       linear-gradient(#fff 0 0) content-box,
       linear-gradient(#fff 0 0);
 
-    opacity: if($bg, 1, 0);
+    opacity: if(sass($bg): 1; else: 0);
   }
 
   @if $hover-bg !=null {
     @media (any-hover: hover) {
       &:hover::after {
-        opacity: if($hover-bg, 1, 0);
+        opacity: if(sass($hover-bg): 1; else: 0);
       }
     }
   }
@@ -100,10 +90,7 @@
 
 //< " FONT GRADIENT " >
 @mixin font-gradient($dir, $colors...) {
-  background: -webkit-linear-gradient(
-    $dir,
-    $colors
-  );
+  background: -webkit-linear-gradient($dir, $colors);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -130,7 +117,28 @@
 
   // For Firefox
   @supports (-moz-appearance: none) {
-    scrollbar-color: $thumb-color
-      $background-color;
+    scrollbar-color: $thumb-color $background-color;
   }
+}
+
+/// Convert px to rem (base 16px)
+/// @param {Number} $px - Value in pixels
+/// @return {Number} Value in rem
+/// @example scss
+///   font-size: rem(18);           // 1.125rem
+///   padding: rem(20) rem(32);     // 1.25rem 2rem
+@function rem($px) {
+  @return math.div($px, 16) * 1rem;
+}
+
+/// Convert px to em (relative to parent font-size)
+/// @param {Number} $px - Value in pixels
+/// @param {Number} $base [16] - Parent font-size in px
+/// @return {Number} Value in em
+/// @example scss
+///   font-size: em(14);            // 0.875em
+///   font-size: em(14, 18);        // 0.7778em (14px relative to 18px parent)
+
+@function em($px, $base: 16) {
+  @return math.div($px, $base) * 1em;
 }

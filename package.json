@@ -1,7 +1,7 @@
 {
-  "name": "gulp-template-lite",
+  "name": "gulp-template",
   "version": "1.0.0",
-  "description": "My gulp template for frondend",
+  "description": "My gulp template",
   "main": "gulpfile.js",
   "type": "module",
   "scripts": {
@@ -17,6 +17,7 @@
     "autoprefixer": "^10.4.20",
     "browser-sync": "^2.29.3",
     "del": "^7.1.0",
+    "esbuild": "^0.28.0",
     "eslint": "^8.56.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.0.1",
@@ -24,6 +25,7 @@
     "gulp-autoprefixer": "^9.0.0",
     "gulp-avif-webp-html-universal": "^0.1.3",
     "gulp-cssmin": "^0.2.0",
+    "gulp-esbuild": "^0.14.1",
     "gulp-file-include": "^2.3.0",
     "gulp-fonter": "^0.3.0",
     "gulp-group-css-media-queries": "^1.2.2",
@@ -37,13 +39,14 @@
     "gulp-prettify": "^0.5.0",
     "gulp-rename": "^2.0.0",
     "gulp-replace": "^1.1.4",
-    "gulp-sass": "^5.1.0",
+    "gulp-sass": "^6.0.1",
     "gulp-ttf2woff2": "^4.0.1",
     "gulp-web-images-css": "^1.3.1",
     "gulp-zip": "^6.1.0",
     "prettier": "^3.1.1",
-    "sass": "^1.77.8",
+    "sass": "^1.100.0",
     "sharp": "^0.33.0",
-    "tailwindcss": "^3.4.17"
+    "tailwindcss": "^3.4.17",
+    "gulp-sass-glob-use-forward": "^0.1.3"
   }
 }

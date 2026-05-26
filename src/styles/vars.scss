@@ -1,10 +1,12 @@
 :root {
+  /* Colors */
   --white: #fff;
   --dark: #000;
 
-  --font-arial:
-    Arial, 'Helvetica Neue', Helvetica, sans-serif;
+  /* Typography */
+  --font-arial: Arial, 'Helvetica Neue', Helvetica, sans-serif;
 
+  /* Layout */
   --max-width-container: 1200px;
   --container-padding: 15px;
 }
