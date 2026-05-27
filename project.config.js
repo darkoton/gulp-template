@@ -1,8 +1,14 @@
+const isDev = process.env.NODE_ENV !== 'production';
+const isProd = process.env.NODE_ENV === 'production';
+
 export const projectConfig = {
   // ─────────────────────────────────────────────────────────
   // Environment
   // ─────────────────────────────────────────────────────────
-
+  env: {
+    isDev,
+    isProd,
+  },
   // ─────────────────────────────────────────────────────────
   // Images
   // ─────────────────────────────────────────────────────────

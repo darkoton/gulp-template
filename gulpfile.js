@@ -4,6 +4,9 @@
 
 import gulp from 'gulp';
 
+// Environment (must be first — loads .env before config evaluation)
+import './gulp/configs/env.js';
+
 // Configuration
 import { paths } from './gulp/configs/paths.js';
 import { plugins } from './gulp/configs/plugins.js';

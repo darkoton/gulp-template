@@ -5,9 +5,9 @@
   "main": "gulpfile.js",
   "type": "module",
   "scripts": {
-    "dev": "gulp dev",
-    "build": "gulp build",
-    "build-min": "gulp build-min",
+    "dev": "cross-env NODE_OPTIONS=--no-deprecation NODE_ENV=development gulp dev",
+    "build": "cross-env NODE_OPTIONS=--no-deprecation NODE_ENV=production gulp build",
+    "build-min": "cross-env NODE_OPTIONS=--no-deprecation NODE_ENV=production gulp build-min",
     "start": "gulp start",
     "prettier": "prettier"
   },
@@ -16,12 +16,14 @@
   "devDependencies": {
     "autoprefixer": "^10.4.20",
     "browser-sync": "^2.29.3",
+    "cross-env": "^10.1.0",
     "del": "^7.1.0",
     "dotenv": "^17.4.2",
     "esbuild": "^0.28.0",
     "eslint": "^8.56.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.0.1",
+    "globals": "^17.6.0",
     "gulp": "^4.0.2",
     "gulp-autoprefixer": "^9.0.0",
     "gulp-avif-webp-html-universal": "^0.1.3",
