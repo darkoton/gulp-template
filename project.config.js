@@ -9,6 +9,16 @@ export const projectConfig = {
     isDev,
     isProd,
   },
+
+  // ─────────────────────────────────────────────────────────
+  // Dev Server (BrowserSync)
+  // ─────────────────────────────────────────────────────────
+  server: {
+    port: Number(process.env.PORT) || 3000,
+    hostname: process.env.SITE_URL || 'http://localhost:3000',
+    open: false, // open browser on `pnpm dev`
+  },
+
   // ─────────────────────────────────────────────────────────
   // Images
   // ─────────────────────────────────────────────────────────

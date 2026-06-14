@@ -4,6 +4,9 @@ export const server = done => {
       baseDir: `${app.paths.build}`,
     },
     notify: false,
-    port: 3000,
+    port: app.config.server.port,
+    open: app.config.server.open ?? true,
+    cors: true,
+    // logLevel: 'silent',
   });
 };
