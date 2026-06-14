@@ -19,6 +19,7 @@ const folders = {
   pages: 'pages',
   layouts: 'layouts',
   components: 'components',
+  favicons: 'favicons',
 };
 
 const extensions = {
@@ -44,10 +45,13 @@ const computedPaths = {
   srcHtmlLayouts: `${folders.src}/${folders.html}/${folders.layouts}`,
   srcHtmlPages: `${folders.src}/${folders.html}/${folders.pages}`,
   srcHtmlComponents: `${folders.src}/${folders.html}/${folders.components}`,
+  srcFavicons: `${folders.src}/${folders.favicons}`,
+  buildHtml: `${folders.build}`,
   buildStyles: `${folders.build}/${folders.styles}`,
   buildScripts: `${folders.build}/${folders.scripts}`,
   buildAssets: `${folders.build}/${folders.assets}`,
   buildImages: `${folders.build}/${folders.assets}/${folders.images}`,
+  buildFavicons: `${folders.build}/${folders.favicons}`,
 };
 
 const globs = {
@@ -76,6 +80,7 @@ const globs = {
     `!${computedPaths.srcImages}/**/*.${extensions.images}`,
     `!${computedPaths.srcSprites}/**/*.${extensions.sprites}`,
   ],
+  favicons: `${computedPaths.srcFavicons}/favicon.${extensions.images}`,
 };
 
 export const paths = {

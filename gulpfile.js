@@ -14,9 +14,10 @@ import { config } from './gulp/configs/config.js';
 
 // Global app object
 global.app = {
-  gulp: gulp,
-  paths: paths,
-  plugins: plugins,
+  gulp,
+  paths,
+  plugins,
+  config,
 };
 
 // Tasks
@@ -31,6 +32,7 @@ import { server } from './gulp/tasks/server.js';
 import { minHTML, minCSS, minJS, minImg } from './gulp/tasks/minify.js';
 import { buildCSS } from './gulp/tasks/build.js';
 import { zip } from './gulp/tasks/zip.js';
+import { faviconsDev, faviconsBuild } from './gulp/tasks/favicons.js';
 
 const taskSeries = {
   html: [html],
@@ -93,9 +95,14 @@ const mainTasks = gulp.series(
 
 const buildTasks = gulp.series(buildCSS);
 
-const dev = gulp.series(reset, mainTasks, gulp.parallel(watcher, server));
+const dev = gulp.series(
+  reset,
+  faviconsDev,
+  mainTasks,
+  gulp.parallel(watcher, server),
+);
 
-const build = gulp.series(reset, mainTasks, buildTasks, minImg);
+const build = gulp.series(reset, faviconsBuild, mainTasks, buildTasks, minImg);
 
 const buildMin = gulp.series(build, gulp.parallel(minHTML, minCSS, minJS));
 

@@ -36,4 +36,16 @@ export const projectConfig = {
   scripts: {
     type: 'modules', // 'modules' or 'scripts'
   },
+
+  // ─────────────────────────────────────────────────────────
+  // Favicon
+  // ─────────────────────────────────────────────────────────
+  favicons: {
+    appName: 'Gulp Template',
+    appShortName: 'Template',
+    appDescription: 'This is my gulp template',
+    developerName: 'Artem Rachuk',
+    developerURL: 'https://github.com/darkoton/gulp-template',
+    background: '#000',
+  },
 };

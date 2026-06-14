@@ -6,8 +6,8 @@
   "type": "module",
   "scripts": {
     "dev": "cross-env NODE_OPTIONS=--no-deprecation NODE_ENV=development gulp dev",
-    "build": "cross-env NODE_OPTIONS=--no-deprecation NODE_ENV=production gulp build",
-    "build-min": "cross-env NODE_OPTIONS=--no-deprecation NODE_ENV=production gulp build-min",
+    "build:dev": "cross-env NODE_OPTIONS=--no-deprecation NODE_ENV=production gulp build",
+    "build:prod": "cross-env NODE_OPTIONS=--no-deprecation NODE_ENV=production gulp build-min",
     "start": "gulp start",
     "prettier": "prettier"
   },
@@ -29,9 +29,11 @@
     "gulp-avif-webp-html-universal": "^0.1.3",
     "gulp-cssmin": "^0.2.0",
     "gulp-esbuild": "^0.14.1",
+    "gulp-favicons": "^4.0.2",
     "gulp-file-include": "^2.3.0",
     "gulp-fonter": "^0.3.0",
     "gulp-group-css-media-queries": "^1.2.2",
+    "gulp-header": "^2.0.12",
     "gulp-htmlmin": "^5.0.1",
     "gulp-if": "^3.0.0",
     "gulp-jsmin": "^0.1.5",
