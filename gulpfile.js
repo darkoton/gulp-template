@@ -101,6 +101,13 @@ const buildTasks = gulp.parallel(
   buildJS,
 );
 
+const buildMinTasks = gulp.parallel(
+  ...(config.minify.html ? [minHTML] : []),
+  ...(config.minify.css ? [minCSS] : []),
+  ...(config.minify.js ? [minJS] : []),
+  ...(config.minify.images ? [minImg] : []),
+);
+
 const dev = gulp.series(
   reset,
   faviconsDev,
@@ -110,10 +117,7 @@ const dev = gulp.series(
 
 const build = gulp.series(reset, faviconsBuild, buildTasks);
 
-const buildMin = gulp.series(
-  build,
-  gulp.parallel(minHTML, minCSS, minJS, minImg),
-);
+const buildMin = gulp.series(build, buildMinTasks);
 
 gulp.task('dev', dev);
 

@@ -58,4 +58,14 @@ export const projectConfig = {
     developerURL: 'https://github.com/darkoton/gulp-template',
     background: '#000',
   },
+
+  // ─────────────────────────────────────────────────────────
+  // Minify HTML, CSS, JS, Images
+  // ─────────────────────────────────────────────────────────
+  minify: {
+    html: false,
+    css: false,
+    js: false,
+    images: true,
+  },
 };
