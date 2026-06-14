@@ -30,7 +30,7 @@ import { images } from './gulp/tasks/images.js';
 // import { otfToTtf, ttfToWoff, iconfonts } from './gulp/tasks/fonts.js';
 import { server } from './gulp/tasks/server.js';
 import { minHTML, minCSS, minJS, minImg } from './gulp/tasks/minify.js';
-import { buildCSS } from './gulp/tasks/build.js';
+import { buildCSS, buildJS, buildHTML } from './gulp/tasks/build.js';
 import { zip } from './gulp/tasks/zip.js';
 import { faviconsDev, faviconsBuild } from './gulp/tasks/favicons.js';
 
@@ -93,7 +93,13 @@ const mainTasks = gulp.series(
   ),
 );
 
-const buildTasks = gulp.series(buildCSS);
+const buildTasks = gulp.parallel(
+  copy,
+  gulp.series(...taskSeries.html, buildHTML),
+  gulp.series(...taskSeries.styles, buildCSS),
+  gulp.series(...taskSeries.images),
+  buildJS,
+);
 
 const dev = gulp.series(
   reset,
@@ -102,9 +108,12 @@ const dev = gulp.series(
   gulp.parallel(watcher, server),
 );
 
-const build = gulp.series(reset, faviconsBuild, mainTasks, buildTasks, minImg);
+const build = gulp.series(reset, faviconsBuild, buildTasks);
 
-const buildMin = gulp.series(build, gulp.parallel(minHTML, minCSS, minJS));
+const buildMin = gulp.series(
+  build,
+  gulp.parallel(minHTML, minCSS, minJS, minImg),
+);
 
 gulp.task('dev', dev);
 

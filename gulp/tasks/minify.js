@@ -20,14 +20,14 @@ export const minCSS = () => {
 
 export const minJS = () => {
   return app.gulp
-    .src(app.paths.globs.scripts)
+    .src(app.paths.globs.scriptsBuild)
     .pipe(jsmin())
     .pipe(app.gulp.dest(app.paths.buildScripts));
 };
 
 export const minImg = async () => {
   return app.gulp
-    .src(app.paths.globs.images)
+    .src(app.paths.globs.imagesBuild)
     .pipe(optimizeImage())
     .pipe(app.gulp.dest(app.paths.buildImages));
 };

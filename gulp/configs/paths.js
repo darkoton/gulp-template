@@ -74,6 +74,7 @@ const globs = {
   scriptsBuild: `${computedPaths.buildScripts}/**/*.${extensions.scripts}`,
   scriptsWatch: `${computedPaths.srcScripts}/**/*.${extensions.scripts}`,
   images: `${computedPaths.srcImages}/**/*.${extensions.images}`,
+  imagesBuild: `${computedPaths.buildImages}/**/*.${extensions.images}`,
   sprites: `${computedPaths.srcSprites}/**/*.${extensions.sprites}`,
   assets: [
     `${computedPaths.srcAssets}/**/*`,
