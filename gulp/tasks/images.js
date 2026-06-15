@@ -60,7 +60,7 @@ export const imagesCopy = () => {
 export const images = gulp.parallel(
   imagesCopy,
   ...[
-    config.images.webp.enabled ? imagesWebp : null,
-    config.images.avif.enabled ? imagesAvif : null,
+    config.images.webp.enabled && config.env.isProd ? imagesWebp : null,
+    config.images.avif.enabled && config.env.isProd ? imagesAvif : null,
   ].filter(Boolean),
 );
