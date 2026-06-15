@@ -65,6 +65,7 @@ const globs = {
 
   styles: [
     `${computedPaths.srcStyles}/*.${extensions.styles}`,
+    `${computedPaths.srcStyles}/pages/*.${extensions.styles}`,
     `!${computedPaths.srcStyles}/_*.${extensions.styles}`,
   ],
   stylesBuild: `${computedPaths.buildStyles}/**/*.${extensions.css}`,
