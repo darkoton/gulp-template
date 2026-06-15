@@ -40,7 +40,7 @@ export const faviconsDevImage = () => {
               background: '#fff',
             }),
         path: '/favicons',
-        url: 'http://haydenbleasel.com/', // NeedFix: add url from env
+        url: process.env.SITE_URL,
         display: 'standalone',
         orientation: 'portrait',
         scope: '/',
@@ -78,7 +78,7 @@ export const faviconsBuildImage = () => {
               background: '#fff',
             }),
         path: '../favicons',
-        url: 'http://haydenbleasel.com/', // NeedFix: add url from env
+        url: process.env.SITE_URL,
         display: 'standalone',
         orientation: 'portrait',
         scope: '/',
