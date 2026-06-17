@@ -32,7 +32,7 @@ import { server } from './gulp/tasks/server.js';
 import { minHTML, minCSS, minJS, minImg } from './gulp/tasks/minify.js';
 import { buildCSS, buildJS, buildHTML } from './gulp/tasks/build.js';
 import { zip } from './gulp/tasks/zip.js';
-import { faviconsDev, faviconsBuild } from './gulp/tasks/favicons.js';
+import { favicons } from './gulp/tasks/favicons.js';
 
 const taskSeries = {
   html: [html],
@@ -110,12 +110,12 @@ const buildMinTasks = gulp.parallel(
 
 const dev = gulp.series(
   reset,
-  faviconsDev,
+  favicons,
   mainTasks,
   gulp.parallel(watcher, server),
 );
 
-const build = gulp.series(reset, faviconsBuild, buildTasks);
+const build = gulp.series(reset, favicons, buildTasks);
 
 const buildMin = gulp.series(build, buildMinTasks);
 

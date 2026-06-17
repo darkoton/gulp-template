@@ -13,7 +13,7 @@ const faviconsHTML = async () => {
       .pipe(
         gulpIf(
           app.config.env.isProd,
-          header('<link rel="icon" href="./favicons/favicon.ico">'),
+          header('<link rel="icon" href="./assets/favicons/favicon.ico">'),
         ),
       )
       .pipe(app.gulp.dest(app.paths.srcHtmlComponents))
@@ -24,7 +24,7 @@ const faviconsHTML = async () => {
   await deleteAsync(htmlPath);
 };
 
-export const faviconsDevImage = () => {
+export const faviconsImage = () => {
   return app.gulp
     .src(app.paths.globs.favicons)
     .pipe(
@@ -39,7 +39,7 @@ export const faviconsDevImage = () => {
               developerURL: 'https://github.com/darkoton',
               background: '#fff',
             }),
-        path: '/favicons',
+        path: '/assets/favicons',
         url: process.env.SITE_URL,
         display: 'standalone',
         orientation: 'portrait',
@@ -49,8 +49,8 @@ export const faviconsDevImage = () => {
         html: `./favicons.html`,
         pipeHTML: true,
         icons: {
-          android: false,
-          appleIcon: false,
+          android: app.config.env.isProd,
+          appleIcon: app.config.env.isProd,
           appleStartup: false,
           coast: false,
           favicons: true,
@@ -62,43 +62,4 @@ export const faviconsDevImage = () => {
     .pipe(app.gulp.dest(app.paths.buildFavicons));
 };
 
-export const faviconsBuildImage = () => {
-  return app.gulp
-    .src(app.paths.globs.favicons)
-    .pipe(
-      faviconsGenerate({
-        ...(app.config.favicons
-          ? app.config.favicons
-          : {
-              appName: 'My App',
-              appShortName: 'App',
-              appDescription: 'This is my application',
-              developerName: 'Artem Rachuk',
-              developerURL: 'https://github.com/darkoton',
-              background: '#fff',
-            }),
-        path: '../favicons',
-        url: process.env.SITE_URL,
-        display: 'standalone',
-        orientation: 'portrait',
-        scope: '/',
-        start_url: './',
-        version: 1.0,
-        html: `./favicons.html`,
-        pipeHTML: true,
-        icons: {
-          android: true,
-          appleIcon: true,
-          appleStartup: false,
-          coast: false,
-          favicons: true,
-          windows: false,
-          yandex: false,
-        },
-      }),
-    )
-    .pipe(app.gulp.dest(app.paths.buildFavicons));
-};
-
-export const faviconsDev = gulp.series(faviconsDevImage, faviconsHTML);
-export const faviconsBuild = gulp.series(faviconsBuildImage, faviconsHTML);
+export const favicons = gulp.series(faviconsImage, faviconsHTML);

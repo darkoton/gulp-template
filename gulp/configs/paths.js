@@ -47,14 +47,14 @@ const computedPaths = {
   srcHtmlLayouts: `${folders.src}/${folders.html}/${folders.layouts}`,
   srcHtmlPages: `${folders.src}/${folders.html}/${folders.pages}`,
   srcHtmlComponents: `${folders.src}/${folders.html}/${folders.components}`,
-  srcFavicons: `${folders.src}/${folders.favicons}`,
+  srcFavicons: `${folders.src}/${folders.assets}/${folders.favicons}`,
   srcFonts: `${folders.src}/${folders.assets}/${folders.fonts}`,
   buildHtml: `${folders.build}`,
   buildStyles: `${folders.build}/${folders.styles}`,
   buildScripts: `${folders.build}/${folders.scripts}`,
   buildAssets: `${folders.build}/${folders.assets}`,
   buildImages: `${folders.build}/${folders.assets}/${folders.images}`,
-  buildFavicons: `${folders.build}/${folders.favicons}`,
+  buildFavicons: `${folders.build}/${folders.assets}/${folders.favicons}`,
   buildFonts: `${folders.build}/${folders.assets}/${folders.fonts}`,
 };
 
@@ -86,6 +86,7 @@ const globs = {
     `!${computedPaths.srcImages}`,
     `!${computedPaths.srcSprites}`,
     `!${computedPaths.srcFonts}/**`,
+    `!${computedPaths.srcFavicons}/**`,
   ],
   favicons: `${computedPaths.srcFavicons}/favicon.${extensions.images}`,
   fonts: [
