@@ -20,6 +20,7 @@ const folders = {
   layouts: 'layouts',
   components: 'components',
   favicons: 'favicons',
+  fonts: 'fonts',
 };
 
 const extensions = {
@@ -29,6 +30,7 @@ const extensions = {
   html: 'html',
   images: '{jpg,jpeg,png,gif,ico,webp,svg}',
   sprites: 'svg',
+  fonts: '{eot,ttf,otf,otc,ttc,woff,woff2,svg}',
 };
 
 // ─────────────────────────────────────────────────────────────
@@ -46,12 +48,14 @@ const computedPaths = {
   srcHtmlPages: `${folders.src}/${folders.html}/${folders.pages}`,
   srcHtmlComponents: `${folders.src}/${folders.html}/${folders.components}`,
   srcFavicons: `${folders.src}/${folders.favicons}`,
+  srcFonts: `${folders.src}/${folders.assets}/${folders.fonts}`,
   buildHtml: `${folders.build}`,
   buildStyles: `${folders.build}/${folders.styles}`,
   buildScripts: `${folders.build}/${folders.scripts}`,
   buildAssets: `${folders.build}/${folders.assets}`,
   buildImages: `${folders.build}/${folders.assets}/${folders.images}`,
   buildFavicons: `${folders.build}/${folders.favicons}`,
+  buildFonts: `${folders.build}/${folders.assets}/${folders.fonts}`,
 };
 
 const globs = {
@@ -79,10 +83,18 @@ const globs = {
   sprites: `${computedPaths.srcSprites}/**/*.${extensions.sprites}`,
   assets: [
     `${computedPaths.srcAssets}/**/*`,
-    `!${computedPaths.srcImages}/**/*.${extensions.images}`,
-    `!${computedPaths.srcSprites}/**/*.${extensions.sprites}`,
+    `!${computedPaths.srcImages}`,
+    `!${computedPaths.srcSprites}`,
+    `!${computedPaths.srcFonts}/**`,
   ],
   favicons: `${computedPaths.srcFavicons}/favicon.${extensions.images}`,
+  fonts: [
+    `${computedPaths.srcFonts}/**/*.${extensions.fonts}`,
+    `!${computedPaths.srcFonts}/iconfonts/**/*.${extensions.fonts}`,
+  ],
+  fontsBuild: `${computedPaths.buildFonts}/**/*.${extensions.fonts}`,
+  iconFonts: `${computedPaths.srcFonts}/iconfonts/**/*.${extensions.fonts}`,
+  iconFontsBuild: `${computedPaths.buildFonts}/iconfonts/**/*.${extensions.fonts}`,
 };
 
 export const paths = {

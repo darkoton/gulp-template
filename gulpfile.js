@@ -27,7 +27,7 @@ import { html } from './gulp/tasks/html.js';
 import { scss } from './gulp/tasks/scss.js';
 import { js } from './gulp/tasks/js.js';
 import { images } from './gulp/tasks/images.js';
-// import { otfToTtf, ttfToWoff, iconfonts } from './gulp/tasks/fonts.js';
+import { otfToTtf, ttfToWoff, iconfonts } from './gulp/tasks/fonts.js';
 import { server } from './gulp/tasks/server.js';
 import { minHTML, minCSS, minJS, minImg } from './gulp/tasks/minify.js';
 import { buildCSS, buildJS, buildHTML } from './gulp/tasks/build.js';
@@ -80,10 +80,9 @@ function watcher() {
   gulp.watch(globs.scripts, gulp.series(...taskSeries.js));
 }
 
-// const fonts = gulp.series(otfToTtf, ttfToWoff, iconfonts);
+const fonts = gulp.series(otfToTtf, ttfToWoff, iconfonts);
 
 const mainTasks = gulp.series(
-  // fonts,
   gulp.parallel(
     copy,
     gulp.series(...taskSeries.html),
@@ -94,6 +93,7 @@ const mainTasks = gulp.series(
 );
 
 const buildTasks = gulp.parallel(
+  fonts,
   copy,
   gulp.series(...taskSeries.html, buildHTML),
   gulp.series(...taskSeries.styles, buildCSS),
