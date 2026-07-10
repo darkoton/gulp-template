@@ -20,6 +20,8 @@ global.app = {
   config,
 };
 
+// Tasks plugins (tailwind, etc.)
+
 // Tasks
 import { copy } from './gulp/tasks/copy.js';
 import { reset } from './gulp/tasks/reset.js';
@@ -41,31 +43,6 @@ const taskSeries = {
   images: [images],
 };
 
-// for (let index = 0; index < Object.keys(config.packages).length; index++) {
-//   const key = Object.keys(config.packages)[index];
-//   const packageConfig = config.packages[key];
-
-//   let type = 'module';
-//   const tasks = {};
-//   if (packageConfig.enable) {
-//     if (packageConfig.config.type === 'cdn') {
-//       type = 'cdn';
-//     } else if (packageConfig.config.type === 'module') {
-//       type = 'module';
-//     }
-//     Object.assign(tasks, packageConfig.tasks[type]);
-//   }
-
-//   for (let i = 0; i < Object.keys(tasks).length; i++) {
-//     const taskKey = Object.keys(tasks)[i];
-//     const task = tasks[taskKey];
-
-//     if (task) {
-//       taskSeries[taskKey].push(task);
-//     }
-//   }
-// }
-
 // ─────────────────────────────────────────────────────────────
 // Watch
 // ─────────────────────────────────────────────────────────────
@@ -78,18 +55,18 @@ function watcher() {
   gulp.watch(globs.html, gulp.series(...taskSeries.html));
   gulp.watch(globs.stylesWatch, gulp.series(...taskSeries.styles));
   gulp.watch(globs.scripts, gulp.series(...taskSeries.js));
+
+  // Plugins watcher
 }
 
 const fonts = gulp.series(otfToTtf, ttfToWoff, iconfonts);
 
-const mainTasks = gulp.series(
-  gulp.parallel(
-    copy,
-    gulp.series(...taskSeries.html),
-    gulp.series(...taskSeries.styles),
-    gulp.series(...taskSeries.js),
-    gulp.series(...taskSeries.images),
-  ),
+const mainTasks = gulp.parallel(
+  copy,
+  gulp.series(...taskSeries.html),
+  gulp.series(...taskSeries.styles),
+  gulp.series(...taskSeries.js),
+  gulp.series(...taskSeries.images),
 );
 
 const buildTasks = gulp.parallel(

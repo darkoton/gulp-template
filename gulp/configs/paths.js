@@ -72,7 +72,10 @@ const globs = {
     `${computedPaths.srcStyles}/pages/*.${extensions.styles}`,
     `!${computedPaths.srcStyles}/_*.${extensions.styles}`,
   ],
-  stylesBuild: `${computedPaths.buildStyles}/**/*.${extensions.css}`,
+  stylesBuild: [
+    `${computedPaths.buildStyles}/**/*.${extensions.css}`,
+    `!${computedPaths.buildStyles}/**/tailwind.${extensions.css}`,
+  ],
   stylesWatch: `${computedPaths.srcStyles}/**/*.${extensions.styles}`,
   scripts: `${computedPaths.srcScripts}/**/*.${extensions.scripts}`,
   scriptsGlob: `${computedPaths.srcScripts}/*.${extensions.scripts}`,
