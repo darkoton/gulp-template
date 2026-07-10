@@ -7,6 +7,8 @@
 
 // Directory names (mirrors gulp/configs/paths.js)
 const folders = {
+  gulp: 'gulp',
+  tasks: 'tasks',
   src: 'src',
   styles: 'styles',
   scripts: 'scripts',
@@ -21,6 +23,7 @@ export { folders };
 // Package
 // ─────────────────────────────────────────────────────────────
 
+export const folderName = 'tailwind';
 export const packageName = 'tailwindcss';
 export const version = '3.4.17';
 
@@ -38,9 +41,12 @@ export const server = {
 // ─────────────────────────────────────────────────────────────
 
 export const files = {
+  tailwindConfigModule: 'tailwind.config.module.js',
+  tailwindConfigCdn: 'tailwind.config.cdn.js',
   tailwindConfig: 'tailwind.config.js',
   tailwindCSS: 'tailwind.css',
   tailwindDemo: 'tailwind.html',
+  tailwindTask: 'tailwind.js',
   head: 'head.html',
 };
 
@@ -50,9 +56,13 @@ export const files = {
 
 export const paths = {
   // Where to create tailwind config
-  config: {
+  configModule: {
     dest: './',
-    filename: files.tailwindConfig,
+    filename: files.tailwindConfigModule,
+  },
+  configCdn: {
+    dest: `${folders.src}/${folders.scripts}/`,
+    filename: files.tailwindConfigCdn,
   },
 
   // Where to create tailwind styles
@@ -63,8 +73,8 @@ export const paths = {
 
   // Gulp task file
   gulpTask: {
-    dest: 'gulp/tasks/',
-    filename: 'tailwind.js',
+    dest: `${folders.gulp}/${folders.tasks}/`,
+    filename: files.tailwindTask,
   },
 
   // HTML file to inject stylesheet link
@@ -86,6 +96,8 @@ export const options = {
   copyDemoPage: true,
   createStyles: true,
   injectStylesheet: true,
+  injectCdn: true,
+  injectConfig: true,
 };
 
 // ─────────────────────────────────────────────────────────────

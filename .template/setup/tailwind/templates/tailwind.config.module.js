@@ -3,9 +3,9 @@ export default {
   content: ['./src/**/*.{html,js}'],
   theme: {
     extend: {
-      // colors: {},
-      // fontFamily: {},
-      // spacing: {},
+      colors: {},
+      fontFamily: {},
+      spacing: {},
     },
   },
   plugins: [],

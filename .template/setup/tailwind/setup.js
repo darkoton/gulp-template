@@ -10,106 +10,19 @@ import fs from 'fs';
 import path from 'path';
 import { exec, execSync } from 'child_process';
 import http from 'http';
-import readline from 'readline';
 import * as config from './config.js';
-import { resolvePath, srcPath } from '../../paths.js';
-import { fileURLToPath } from 'node:url';
-
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const templatesDir = path.join(__dirname, 'templates');
-
-// ─────────────────────────────────────────────────────────────
-// Helpers
-// ─────────────────────────────────────────────────────────────
-
-function log(message, type = 'info') {
-  const icons = { info: '◦', success: '✓', error: '✗', skip: '−' };
-  console.log(`    ${icons[type]} ${message}`);
-}
-
-function confirm(question) {
-  return new Promise(resolve => {
-    const rl = readline.createInterface({
-      input: process.stdin,
-      output: process.stdout,
-    });
-
-    rl.question(`  ${question} (y/n): `, answer => {
-      rl.close();
-      resolve(
-        answer.toLowerCase() === 'y' || answer.toLowerCase() === 'yes',
-      );
-    });
-  });
-}
-
-function getSourcePath(...parts) {
-  return srcPath(...parts);
-}
-
-function copyTemplate(templateName, destPath) {
-  const src = path.join(templatesDir, templateName);
-
-  if (!fs.existsSync(src)) {
-    log(`Template "${templateName}" not found.`, 'error');
-    return false;
-  }
-
-  if (fs.existsSync(destPath)) {
-    log(`${path.basename(destPath)} already exists.`, 'skip');
-    return false;
-  }
-
-  const dir = path.dirname(destPath);
-  if (!fs.existsSync(dir)) {
-    fs.mkdirSync(dir, { recursive: true });
-  }
-
-  fs.copyFileSync(src, destPath);
-  log(`Created ${path.basename(destPath)}.`, 'success');
-  return true;
-}
-
-function openBrowser(url) {
-  const cmd =
-    process.platform === 'win32'
-      ? 'start'
-      : process.platform === 'darwin'
-        ? 'open'
-        : 'xdg-open';
-  exec(`${cmd} ${url}`);
-}
-
-function isServerRunning() {
-  return new Promise(resolve => {
-    const req = http.get(
-      `http://${config.server.host}:${config.server.port}`,
-      () => {
-        resolve(true);
-      },
-    );
-    req.on('error', () => resolve(false));
-    req.setTimeout(1000, () => {
-      req.destroy();
-      resolve(false);
-    });
-  });
-}
-
-function reloadServer() {
-  return new Promise(resolve => {
-    const url = `http://${config.server.host}:${config.server.port}/__browser_sync__?method=reload`;
-    http
-      .get(url, () => {
-        log('Server reloaded.', 'success');
-        resolve();
-      })
-      .on('error', () => {
-        log('Could not reload server.', 'error');
-        resolve();
-      });
-  });
-}
+import { resolvePath } from '../../paths.js';
+import { select, Separator } from '@inquirer/prompts';
+import {
+  log,
+  confirm,
+  getSourcePath,
+  copyTemplate,
+  openBrowser,
+  isServerRunning,
+  reloadServer,
+  safeReplace,
+} from '../../helpers.js';
 
 // ─────────────────────────────────────────────────────────────
 // Setup Tasks
@@ -132,12 +45,31 @@ function installPackage() {
   }
 }
 
-function createConfig() {
-  const destPath = resolvePath(
-    config.paths.config.dest,
-    config.paths.config.filename,
-  );
-  copyTemplate('tailwind.config.js', destPath);
+function createConfig(provider = 'pnpm') {
+  let destPath;
+  if (provider === 'pnpm') {
+    destPath = resolvePath(
+      config.paths.configModule.dest,
+      config.files.tailwindConfig,
+    );
+    copyTemplate(
+      config.folderName,
+      config.paths.configModule.filename,
+      destPath,
+    );
+  } else if (provider === 'cdn') {
+    destPath = resolvePath(
+      config.paths.configCdn.dest,
+      config.files.tailwindConfig,
+    );
+    copyTemplate(
+      config.folderName,
+      config.paths.configCdn.filename,
+      destPath,
+    );
+  } else {
+    return log(`Invalid provider: ${provider}`, 'error');
+  }
 }
 
 function createStyles() {
@@ -147,7 +79,7 @@ function createStyles() {
     config.folders.styles,
     config.files.tailwindCSS,
   );
-  copyTemplate(config.files.tailwindCSS, destPath);
+  copyTemplate(config.folderName, config.files.tailwindCSS, destPath);
 }
 
 function injectStylesheet() {
@@ -182,6 +114,74 @@ function injectStylesheet() {
   log('Added Tailwind stylesheet to head.html.', 'success');
 }
 
+function injectCdn() {
+  if (!config.options.injectCdn) return;
+
+  const headPath = resolvePath(config.paths.head);
+
+  if (!fs.existsSync(headPath)) {
+    log('head.html not found.', 'error');
+    return;
+  }
+
+  let content = fs.readFileSync(headPath, 'utf-8');
+
+  if (content.includes('cdn.tailwindcss.com')) {
+    log('Tailwind CDN already in head.html.', 'skip');
+    return;
+  }
+
+  const link = '<script src="https://cdn.tailwindcss.com"></script>';
+
+  const result = safeReplace(
+    content,
+    /(<!-- CDN -->)/,
+    `$1\n${link}`,
+    'inject tailwind CDN',
+  );
+
+  if (!result.success) return;
+
+  content = result.content;
+
+  fs.writeFileSync(headPath, content);
+  log('Added Tailwind CDN to head.html.', 'success');
+}
+
+function injectConfig() {
+  if (!config.options.injectConfig) return;
+
+  const headPath = resolvePath(config.paths.head);
+
+  if (!fs.existsSync(headPath)) {
+    log('head.html not found.', 'error');
+    return;
+  }
+
+  let content = fs.readFileSync(headPath, 'utf-8');
+
+  if (content.includes('tailwind.config.js')) {
+    log('Tailwind config already in head.html.', 'skip');
+    return;
+  }
+
+  const link = '<script src="./scripts/tailwind.config.js"></script>';
+
+  const result = safeReplace(
+    content,
+    /(<!-- SCRIPTS -->)/,
+    `$1\n${link}`,
+    'inject tailwind config',
+  );
+
+  if (!result.success) return;
+
+  content = result.content;
+
+  fs.writeFileSync(headPath, content);
+  log('Added Tailwind config to head.html.', 'success');
+}
+
 function copyDemoPage() {
   if (!config.options.copyDemoPage) return;
 
@@ -190,8 +190,7 @@ function copyDemoPage() {
     config.folders.pages,
     config.paths.demo.filename,
   );
-  console.log(destPath);
-  copyTemplate(config.files.tailwindDemo, destPath);
+  copyTemplate(config.folderName, config.files.tailwindDemo, destPath);
 }
 
 function createGulpTask() {
@@ -199,7 +198,7 @@ function createGulpTask() {
     config.paths.gulpTask.dest,
     config.paths.gulpTask.filename,
   );
-  copyTemplate('tailwind.js', destPath);
+  copyTemplate(config.folderName, 'tailwind.js', destPath);
 }
 
 function updateGulpfile() {
@@ -218,71 +217,80 @@ function updateGulpfile() {
     return;
   }
 
-  // Helper: replace with validation
-  const safeReplace = (pattern, replacement, description) => {
-    const before = content;
-    content = content.replace(pattern, replacement);
-    if (content === before) {
-      log(
-        `Could not ${description} — gulpfile format may have changed.`,
-        'error',
-      );
-      return false;
-    }
-    return true;
-  };
-
   // Add import
   const importLine =
     "import { tailwind, tailwindReload } from './gulp/tasks/tailwind.js';";
-  if (
-    !safeReplace(
-      /(\/\/ Tasks plugins \(tailwind, etc\.\))/,
-      `$1\n${importLine}`,
-      'inject tailwind import',
-    )
-  )
-    return;
+
+  const resultImport = safeReplace(
+    content,
+    /(\/\/ Tasks plugins \(tailwind, etc\.\))/,
+    `$1\n${importLine}`,
+    'inject tailwind import',
+  );
+
+  if (!resultImport.success) return;
+
+  content = resultImport.content;
 
   // Add to watch
-  if (
-    !safeReplace(
-      /(\/\/ Plugins watcher)/,
-      `$1\n  gulp.watch(['tailwind.config.js', \`\${paths.srcStyles}/tailwind.css\`], gulp.series(tailwind, tailwindReload));`,
-      'add tailwind watcher',
-    )
-  )
-    return;
+  const resultWatcher = safeReplace(
+    content,
+    /(\/\/ Plugins watcher)/,
+    `$1\n  gulp.watch(['tailwind.config.js', \`\${paths.srcStyles}/tailwind.css\`], gulp.series(tailwind, tailwindReload));`,
+    'add tailwind watcher',
+  );
+
+  if (!resultWatcher.success) return;
+
+  content = resultWatcher.content;
 
   // Add to mainTasks
-  if (
-    !safeReplace(
-      /(const\s+mainTasks\s*=\s*gulp\.parallel\([\s\S]*?)(\n\);)/,
-      `$1\n  tailwind,$2`,
-      'add tailwind to mainTasks',
-    )
-  )
-    return;
+
+  const resultMainTask = safeReplace(
+    content,
+    /(const\s+mainTasks\s*=\s*gulp\.parallel\([\s\S]*?)(\n\);)/,
+    `$1\n  tailwind,$2`,
+    'add tailwind to mainTasks',
+  );
+
+  if (!resultMainTask.success) return;
+
+  content = resultMainTask.content;
 
   // Add to buildTasks
-  if (
-    !safeReplace(
-      /(const\s+buildTasks\s*=\s*gulp\.parallel\([\s\S]*?)(\n\);)/,
-      `$1\n  tailwind,$2`,
-      'add tailwind to buildTasks',
-    )
-  )
-    return;
+
+  const resultBuildTask = safeReplace(
+    content,
+    /(const\s+buildTasks\s*=\s*gulp\.parallel\([\s\S]*?)(\n\);)/,
+    `$1\n  tailwind,$2`,
+    '!add tailwind to buildTasks',
+  );
+
+  if (!resultBuildTask.success) return;
+
+  content = resultBuildTask.content;
 
   fs.writeFileSync(gulpfilePath, content);
   log('Updated gulpfile.js.', 'success');
 }
 
-function isInstalled() {
-  const configPath = resolvePath(
-    config.paths.config.dest,
-    config.paths.config.filename,
-  );
+function isInstalled(provider = 'pnpm') {
+  let configPath;
+
+  if (provider === 'pnpm')
+    configPath = resolvePath(
+      config.paths.configModule.dest,
+      config.paths.configModule.filename,
+    );
+  else if (provider === 'cdn')
+    configPath = resolvePath(
+      config.paths.configCdn.dest,
+      config.paths.configCdn.filename,
+    );
+  else {
+    return log(`Invalid provider: ${provider}`, 'error');
+  }
+
   const headPath = resolvePath(config.paths.head);
 
   // Check if config exists
@@ -294,6 +302,18 @@ function isInstalled() {
     if (content.includes('tailwind.css')) return true;
   }
 
+  // Check if cdn is in head.html
+  if (fs.existsSync(headPath)) {
+    const content = fs.readFileSync(headPath, 'utf-8');
+    if (content.includes('cdn.tailwindcss.com')) return true;
+  }
+
+  // Check if config is in head.html
+  if (fs.existsSync(headPath)) {
+    const content = fs.readFileSync(headPath, 'utf-8');
+    if (content.includes('tailwind.config.js')) return true;
+  }
+
   return false;
 }
 
@@ -302,53 +322,103 @@ function isInstalled() {
 // ─────────────────────────────────────────────────────────────
 
 async function setup() {
-  console.log(`\n  🎨 Tailwind CSS v${config.version} Setup (CLI)\n`);
+  const provider = await await select({
+    message: 'Select Tailwind installation',
+    choices: [
+      {
+        name: 'pnpm(npm)',
+        value: 'pnpm',
+      },
+      {
+        name: 'cdn',
+        value: 'cdn',
+      },
+    ],
+  });
 
-  if (isInstalled()) {
+  if (isInstalled(provider)) {
     console.log('  ⚡ Tailwind CSS is already installed.\n');
     console.log(
-      `  To reinstall, remove ${config.paths.config.filename} and tailwind link from head.html.\n`,
+      `  To reinstall, remove ${config.files.tailwindConfig} and tailwind link from head.html.\n`,
     );
     return;
   }
 
-  console.log('  This will:');
-  console.log(`    • Install ${config.packageName} package`);
-  console.log('    • Create tailwind.config.js');
-  console.log('    • Create tailwind.css in styles folder');
-  console.log('    • Add stylesheet link to head.html');
-  console.log('    • Create gulp task for Tailwind CLI');
-  console.log('    • Copy demo page');
-  console.log('    • Auto-generate rebuild kit in dist/\n');
+  switch (provider) {
+    case 'pnpm': {
+      console.log(`\n  🎨 Tailwind CSS v${config.version} Setup (CLI)\n`);
 
-  const confirmed = await confirm('Do you want to continue?');
+      console.log('  This will:');
+      console.log(`    • Install ${config.packageName} package`);
+      console.log('    • Create tailwind.config.js');
+      console.log('    • Create tailwind.css in styles folder');
+      console.log('    • Add stylesheet link to head.html');
+      console.log('    • Create gulp task for Tailwind CLI');
+      console.log('    • Copy demo page');
+      console.log('    • Auto-generate rebuild kit in dist/\n');
 
-  if (!confirmed) {
-    console.log('\n  ❌ Setup cancelled.\n');
-    return;
-  }
+      const confirmed = await confirm('Do you want to continue?');
 
-  console.log('\n  Installing...\n');
+      if (!confirmed) {
+        console.log('\n  ❌ Setup cancelled.\n');
+        return;
+      }
 
-  installPackage();
-  createConfig();
-  createStyles();
-  createGulpTask();
-  updateGulpfile();
-  injectStylesheet();
-  copyDemoPage();
+      console.log('\n  Installing...\n');
 
-  console.log(`\n  ✅ Done! Docs: ${config.urls.docs}\n`);
+      installPackage();
+      createConfig(provider);
+      createStyles();
+      createGulpTask();
+      updateGulpfile();
+      injectStylesheet();
+      copyDemoPage();
 
-  if (config.options.openBrowser && config.options.copyDemoPage) {
-    const serverRunning = await isServerRunning();
+      console.log(`\n  ✅ Done! Docs: ${config.urls.docs}\n`);
 
-    if (serverRunning) {
-      await reloadServer();
-      console.log(`  🌐 Opening ${config.urls.demo}\n`);
-      openBrowser(config.urls.demo);
-    } else {
-      console.log('  💡 Run "pnpm dev" to view the demo page.\n');
+      if (config.options.copyDemoPage) {
+        console.log('  💡 Run "pnpm dev" to view the demo page.\n');
+      }
+
+      break;
+    }
+    case 'cdn': {
+      console.log(`\n  🎨 Tailwind CSS v${config.version} Setup (CDN)\n`);
+
+      console.log('  This will:');
+      console.log('    • Create tailwind.config.js');
+      console.log('    • Create tailwind.css in styles folder');
+      console.log('    • Add stylesheet link to head.html');
+      console.log('    • Add CDN link to head.html');
+      console.log('    • Add Config link to head.html');
+      console.log('    • Copy demo page \n');
+
+      const confirmed = await confirm('Do you want to continue?');
+
+      if (!confirmed) {
+        console.log('\n  ❌ Setup cancelled.\n');
+        return;
+      }
+
+      console.log('\n  Installing...\n');
+
+      createConfig(provider);
+      createStyles();
+      injectStylesheet();
+      injectCdn();
+      injectConfig();
+      copyDemoPage();
+
+      console.log(`\n  ✅ Done! Docs: ${config.urls.docs}\n`);
+
+      if (config.options.copyDemoPage) {
+        console.log('  💡 Run "pnpm dev" to view the demo page.\n');
+      }
+      break;
+    }
+    default: {
+      console.log('Invalid selection. Exiting.');
+      break;
     }
   }
 }
