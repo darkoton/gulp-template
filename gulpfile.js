@@ -35,6 +35,7 @@ import { minHTML, minCSS, minJS, minImg } from './gulp/tasks/minify.js';
 import { buildCSS, buildJS, buildHTML } from './gulp/tasks/build.js';
 import { zip } from './gulp/tasks/zip.js';
 import { favicons } from './gulp/tasks/favicons.js';
+import { sprite } from './gulp/tasks/sprite.js';
 
 const taskSeries = {
   html: [html],
@@ -55,6 +56,7 @@ function watcher() {
   gulp.watch(globs.html, gulp.series(...taskSeries.html));
   gulp.watch(globs.stylesWatch, gulp.series(...taskSeries.styles));
   gulp.watch(globs.scripts, gulp.series(...taskSeries.js));
+  gulp.watch(globs.sprites, sprite);
 
   // Plugins watcher
 }
@@ -67,6 +69,7 @@ const mainTasks = gulp.parallel(
   gulp.series(...taskSeries.styles),
   gulp.series(...taskSeries.js),
   gulp.series(...taskSeries.images),
+  sprite,
 );
 
 const buildTasks = gulp.parallel(
@@ -75,6 +78,7 @@ const buildTasks = gulp.parallel(
   gulp.series(...taskSeries.html, buildHTML),
   gulp.series(...taskSeries.styles, buildCSS),
   gulp.series(...taskSeries.images),
+  sprite,
   buildJS,
 );
 

@@ -68,4 +68,13 @@ export const projectConfig = {
     js: false,
     images: true,
   },
+
+  // ─────────────────────────────────────────────────────────
+  // SVG Sprites
+  // ─────────────────────────────────────────────────────────
+
+  sprites: {
+    enabled: true,
+    fileName: 'sprite.symbol.svg',
+  },
 };

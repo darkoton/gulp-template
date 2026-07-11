@@ -87,7 +87,7 @@ const globs = {
   assets: [
     `${computedPaths.srcAssets}/**/*`,
     `!${computedPaths.srcImages}`,
-    `!${computedPaths.srcSprites}`,
+    `!${computedPaths.srcSprites}/**`,
     `!${computedPaths.srcFonts}/**`,
     `!${computedPaths.srcFavicons}/**`,
   ],
