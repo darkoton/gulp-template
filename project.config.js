@@ -60,13 +60,18 @@ export const projectConfig = {
   },
 
   // ─────────────────────────────────────────────────────────
-  // Minify HTML, CSS, JS, Images
+  // Optimization
   // ─────────────────────────────────────────────────────────
-  minify: {
-    html: false,
-    css: false,
-    js: false,
-    images: true,
+  optimization: {
+    minify: {
+      html: isProd,
+      css: isProd,
+      js: isProd,
+      images: isProd,
+    },
+    criticalCSS: false, // include critical.scss in build
+    sitemap: false, // generate sitemap.xml
+    robots: false, // generate robots.txt
   },
 
   // ─────────────────────────────────────────────────────────

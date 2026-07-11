@@ -1,6 +1,7 @@
 import fileinclude from 'gulp-file-include';
 import avifWebpHTML from 'gulp-avif-webp-html-universal';
 import prettify from 'gulp-prettify';
+import gulpIf from 'gulp-if';
 
 export const html = () => {
   return app.gulp
@@ -21,13 +22,11 @@ export const html = () => {
       }),
     )
     .pipe(
+      gulpIf(!app.config.optimization.minify.html,
       prettify({
-        indent_size: 2,
-        indent_char: ' ',
-        max_preserve_newlines: 1,
-        preserve_newlines: true,
-        unformatted: ['pre', 'code'],
-      }),
+          parser: 'html',
+          htmlWhitespaceSensitivity: 'ignore',
+      }))
     )
     .pipe(app.gulp.dest(app.paths.build))
     .pipe(app.plugins.browsersync.stream());

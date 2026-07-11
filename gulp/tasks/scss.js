@@ -7,11 +7,18 @@ import sassGlob from 'gulp-sass-glob-use-forward';
 const sass = gulpSass(dartSass);
 
 export const scss = () => {
-  return app.gulp
-    .src(app.paths.globs.styles, { soursemaps: true })
+  const { gulp, paths, plugins, config } = app;
+
+  const src = config.optimization.criticalCSS
+    ? paths.globs.styles
+    : [...paths.globs.styles, `!${paths.srcStyles}/critical.scss`];
+
+
+  return gulp
+    .src(src, { soursemaps: true })
     .pipe(
-      app.plugins.plumber(
-        app.plugins.notify.onError({
+      plugins.plumber(
+        plugins.notify.onError({
           title: 'SCSS',
           message: 'Error: <%= error.message %>',
         }),
