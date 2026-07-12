@@ -9,7 +9,6 @@ import '../../setup-env.js';
 import fs from 'fs';
 import path from 'path';
 import { exec, execSync } from 'child_process';
-import http from 'http';
 import * as config from './config.js';
 import { resolvePath } from '../../paths.js';
 import { select, Separator } from '@inquirer/prompts';
@@ -19,8 +18,6 @@ import {
   getSourcePath,
   copyTemplate,
   openBrowser,
-  isServerRunning,
-  reloadServer,
   safeReplace,
 } from '../../helpers.js';
 
@@ -322,7 +319,7 @@ function isInstalled(provider = 'pnpm') {
 // ─────────────────────────────────────────────────────────────
 
 async function setup() {
-  const provider = await await select({
+  const provider = await select({
     message: 'Select Tailwind installation',
     choices: [
       {

@@ -13,7 +13,6 @@ export const scss = () => {
     ? paths.globs.styles
     : [...paths.globs.styles, `!${paths.srcStyles}/critical.scss`];
 
-
   return gulp
     .src(src, { soursemaps: true })
     .pipe(
@@ -30,12 +29,7 @@ export const scss = () => {
         outputStyle: 'expanded',
       }),
     )
-    .pipe(
-      gulpIf(
-        file => file.basename !== 'tailwind.css',
-        groupCssMediaQueries(),
-      ),
-    )
+    .pipe(groupCssMediaQueries())
     .pipe(app.gulp.dest(app.paths.buildStyles))
     .pipe(app.plugins.browsersync.stream());
 };

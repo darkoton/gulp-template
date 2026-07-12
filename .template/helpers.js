@@ -3,6 +3,8 @@ import { srcPath } from './paths.js';
 import path from 'path';
 import { fileURLToPath } from 'node:url';
 import fs from 'fs';
+import { exec } from 'child_process';
+import http from 'http';
 
 // ─────────────────────────────────────────────────────────────
 // Helpers
@@ -81,7 +83,7 @@ export function openBrowser(url) {
 }
 
 // Check if server is running
-export function isServerRunning() {
+export function isServerRunning(config) {
   return new Promise(resolve => {
     const req = http.get(
       `http://${config.server.host}:${config.server.port}`,
@@ -98,7 +100,7 @@ export function isServerRunning() {
 }
 
 // Reload server via BrowserSync endpoint
-export function reloadServer() {
+export function reloadServer(config) {
   return new Promise(resolve => {
     const url = `http://${config.server.host}:${config.server.port}/__browser_sync__?method=reload`;
     http

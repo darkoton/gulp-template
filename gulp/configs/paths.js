@@ -71,6 +71,7 @@ const globs = {
     `${computedPaths.srcStyles}/*.${extensions.styles}`,
     `${computedPaths.srcStyles}/pages/*.${extensions.styles}`,
     `!${computedPaths.srcStyles}/_*.${extensions.styles}`,
+    `!${computedPaths.srcStyles}/tailwind.${extensions.styles}`,
   ],
   stylesBuild: [
     `${computedPaths.buildStyles}/**/*.${extensions.css}`,
