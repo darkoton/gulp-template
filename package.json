@@ -10,7 +10,8 @@
     "build:prod": "cross-env NODE_OPTIONS=--no-deprecation NODE_ENV=production gulp build-min",
     "tailwind:setup": "node .template/setup/tailwind/setup.js",
     "preview": "pnpm build:prod && gulp start",
-    "lint": "eslint . --fix && stylelint \"src/**/*.{css,scss}\" --fix",
+    "lint": "eslint . && stylelint \"src/**/*.{css,scss}\"",
+    "lint:fix": "eslint . --fix && stylelint \"src/**/*.{css,scss}\" --fix",
     "format": "prettier --write .",
     "clean": "rimraf dist && rimraf node_modules"
   },
