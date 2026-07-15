@@ -94,6 +94,7 @@ export function optimizeImage() {
               optimized = await sharp(file.contents).avif({
                 quality: config.images.avif?.quality ?? 80,
               });
+              break;
             case '.gif':
               optimized = await sharp(file.contents, { animated: true })
                 .gif({

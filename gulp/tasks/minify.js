@@ -1,4 +1,3 @@
-//Minification
 import htmlmin from 'gulp-htmlmin';
 import cssmin from 'gulp-cssmin';
 import jsmin from 'gulp-jsmin';

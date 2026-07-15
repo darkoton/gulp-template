@@ -12,8 +12,13 @@ import { logWarning } from './logger.js';
  * @param {Object} extMap - Extension mapping (e.g. { '.scss': '.css' })
  * @param {string|null} cacheId - gulp-cached/remember cache ID
  */
-export const createUnlinkHandler = (srcBase, buildBase, extMap = {}, cacheId = null) => {
-  return (filePath) => {
+export const createUnlinkHandler = (
+  srcBase,
+  buildBase,
+  extMap = {},
+  cacheId = null,
+) => {
+  return filePath => {
     try {
       let relativePath = path.relative(srcBase, filePath);
       const ext = path.extname(relativePath);
@@ -43,7 +48,9 @@ export const createUnlinkHandler = (srcBase, buildBase, extMap = {}, cacheId = n
         }
       }
     } catch (error) {
-      logWarning(`Unlink handler failed for ${filePath}: ${error.message}`);
+      logWarning(
+        `Unlink handler failed for ${filePath}: ${error.message}`,
+      );
     }
   };
 };

@@ -22,11 +22,13 @@ export const html = () => {
       }),
     )
     .pipe(
-      gulpIf(!app.config.optimization.minify.html,
-      prettify({
+      gulpIf(
+        !app.config.optimization.minify.html,
+        prettify({
           parser: 'html',
           htmlWhitespaceSensitivity: 'ignore',
-      }))
+        }),
+      ),
     )
     .pipe(app.gulp.dest(app.paths.build))
     .pipe(app.plugins.browsersync.stream());

@@ -6,20 +6,13 @@
 }
 
 *,
-*:before,
-*:after {
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
 :focus,
 :active {
-  outline: none;
-}
-
-a:focus,
-a:active {
   outline: none;
 }
 
@@ -34,12 +27,9 @@ html,
 body {
   height: 100%;
   width: 100%;
-  font-size: 100%;
   line-height: 1;
   font-size: 14px;
-  -ms-text-size-adjust: 100%;
-  -moz-text-size-adjust: 100%;
-  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 input,
@@ -71,6 +61,11 @@ a:hover {
   text-decoration: none;
 }
 
+a:focus,
+a:active {
+  outline: none;
+}
+
 ul li {
   list-style: none;
 }
@@ -98,12 +93,12 @@ h6 {
 
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
+  appearance: none;
   margin: 0;
 }
 
 input[type='number'] {
-  -moz-appearance: textfield;
+  appearance: textfield;
 }
 
 input {

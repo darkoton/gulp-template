@@ -3,6 +3,8 @@
  */
 
 import gulp from 'gulp';
+import path from 'path';
+import fs from 'fs';
 
 // Environment (must be first — loads .env before config evaluation)
 import './gulp/configs/env.js';
@@ -11,10 +13,6 @@ import './gulp/configs/env.js';
 import { paths } from './gulp/configs/paths.js';
 import { plugins } from './gulp/configs/plugins.js';
 import { config } from './gulp/configs/config.js';
-
-// Configuration
-import { noop } from './gulp/utils/noop.js';
-
 
 // Global app object
 globalThis.app = {
@@ -51,15 +49,20 @@ import { sitemap, robots } from './gulp/tasks/optimize.js';
 const { globs } = paths;
 
 function watcher() {
-  gulp.watch(globs.assets, assets).on('unlink', createUnlinkHandler(paths.srcAssets, paths.buildAssets));
-  gulp.watch(globs.images, images).on('unlink', (filePath) => {
+  gulp
+    .watch(globs.assets, assets)
+    .on('unlink', createUnlinkHandler(paths.srcAssets, paths.buildAssets));
+  gulp.watch(globs.images, images).on('unlink', filePath => {
     createUnlinkHandler(paths.srcImages, paths.buildImages)(filePath);
 
     // Remove .webp copy
     const relativePath = path.relative(paths.srcImages, filePath);
     const ext = path.extname(relativePath);
     if (['.jpg', '.jpeg', '.png'].includes(ext.toLowerCase())) {
-      const webpPath = path.join(paths.buildImages, relativePath.replace(ext, '.webp'));
+      const webpPath = path.join(
+        paths.buildImages,
+        relativePath.replace(ext, '.webp'),
+      );
       try {
         fs.unlinkSync(webpPath);
       } catch {
@@ -67,9 +70,24 @@ function watcher() {
       }
     }
   });
-  gulp.watch(globs.html, html).on('unlink', createUnlinkHandler(paths.srcHtmlPages, paths.build, {}, 'html'));
-  gulp.watch(globs.stylesWatch, scss).on('unlink', createUnlinkHandler(paths.srcStyles, paths.buildStyles, { '.scss': '.css' }));
-  gulp.watch(globs.scripts, js).on('unlink', createUnlinkHandler(paths.srcScripts, paths.buildScripts));
+  gulp
+    .watch(globs.html, html)
+    .on(
+      'unlink',
+      createUnlinkHandler(paths.srcHtmlPages, paths.build, {}, 'html'),
+    );
+  gulp.watch(globs.stylesWatch, scss).on(
+    'unlink',
+    createUnlinkHandler(paths.srcStyles, paths.buildStyles, {
+      '.scss': '.css',
+    }),
+  );
+  gulp
+    .watch(globs.scripts, js)
+    .on(
+      'unlink',
+      createUnlinkHandler(paths.srcScripts, paths.buildScripts),
+    );
   gulp.watch(globs.sprites, sprite);
 
   // Plugins watcher
@@ -77,14 +95,7 @@ function watcher() {
 
 const fonts = gulp.series(otfToTtf, ttfToWoff, iconfonts);
 
-const mainTasks = gulp.parallel(
-  assets,
-  html,
-  scss,
-  js,
-  images,
-  sprite,
-);
+const mainTasks = gulp.parallel(assets, html, scss, js, images, sprite);
 
 const minTasks = gulp.parallel(minHTML, minCSS, minJS, minImg);
 
@@ -119,4 +130,7 @@ gulp.task('start', server);
 
 gulp.task('build', gulp.series(logBuildStart, build, zip, logBuildEnd));
 
-gulp.task('build-min', gulp.series(logBuildStart, buildMin, zip, logBuildEnd));
+gulp.task(
+  'build-min',
+  gulp.series(logBuildStart, buildMin, zip, logBuildEnd),
+);

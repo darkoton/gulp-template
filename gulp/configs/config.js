@@ -1,4 +1,3 @@
-
 import { projectConfig } from '../../project.config.js';
 
 const validateConfig = cfg => {

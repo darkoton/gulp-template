@@ -1,6 +1,6 @@
 @use 'sass:math';
 
-//< " RESPONSIVE PROPERTY " >=============================================================================================================>//
+// < " RESPONSIVE PROPERTY " >=============================================================================================================>//
 @mixin fluid(
   $property,
   $max,
@@ -8,9 +8,7 @@
   $min-screen: 320px,
   $max-screen: 430px
 ) {
-  & {
-    #{$property}: #{$max};
-  }
+  #{$property}: #{$max};
 
   @media (max-width: #{$max-screen}) {
     $value-range: math.div($min - $max, 1px);
@@ -27,7 +25,7 @@
   }
 }
 
-//< " BORDER GRADIENT " >
+// < " BORDER GRADIENT " >
 @mixin border-gradient(
   $gradient,
   $width: 0px,
@@ -54,32 +52,27 @@
     top: 0;
     z-index: -1;
     transition: opacity 0.3s ease 0s;
-
     background: var(--gradient);
   }
 
   &::before {
     padding: var(--width);
     border-radius: var(--radius);
-    -webkit-mask:
-      linear-gradient(rgb(255, 255, 255) 0px, rgb(255, 255, 255) 0px)
-        content-box content-box,
-      linear-gradient(rgb(255, 255, 255) 0px, rgb(255, 255, 255) 0px);
-    -webkit-mask-composite: xor;
+    mask:
+      linear-gradient(rgb(255 255 255) 0, rgb(255 255 255) 0) content-box
+        content-box,
+      linear-gradient(rgb(255 255 255) 0, rgb(255 255 255) 0);
+    mask-composite: xor;
   }
 
   &::after {
-    -webkit-mask:
-      linear-gradient(#fff 0 0) content-box,
-      linear-gradient(#fff 0 0);
     mask:
       linear-gradient(#fff 0 0) content-box,
       linear-gradient(#fff 0 0);
-
     opacity: if(sass($bg): 1; else: 0);
   }
 
-  @if $hover-bg !=null {
+  @if not $hover-bg {
     @media (any-hover: hover) {
       &:hover::after {
         opacity: if(sass($hover-bg): 1; else: 0);
@@ -88,14 +81,14 @@
   }
 }
 
-//< " FONT GRADIENT " >
+// < " FONT GRADIENT " >
 @mixin font-gradient($dir, $colors...) {
-  background: -webkit-linear-gradient($dir, $colors);
-  -webkit-background-clip: text;
+  background: linear-gradient($dir, $colors);
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-//< " SCROLLBAR " >
+// < " SCROLLBAR " >
 @mixin scrollbar(
   $size: 10px,
   $thumb-color: #999,
@@ -107,10 +100,12 @@
     width: $size;
     height: $size;
   }
+
   &::-webkit-scrollbar-thumb {
     background: $thumb-color;
     border-radius: $border-radius;
   }
+
   &::-webkit-scrollbar-track {
     background: $background-color;
   }

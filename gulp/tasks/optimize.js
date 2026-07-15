@@ -12,14 +12,21 @@ export const sitemap = async () => {
   const hostname = config.server.hostname;
   const buildDir = paths.build;
   const allFiles = await fs.readdir(buildDir, { recursive: true });
-  const htmlFiles = allFiles.filter((f) => f.endsWith('.html')).map((f) => path.join(buildDir, f));
+  const htmlFiles = allFiles
+    .filter(f => f.endsWith('.html'))
+    .map(f => path.join(buildDir, f));
 
   const urls = await Promise.all(
     htmlFiles
-      .filter((file) => !path.basename(file).startsWith('404'))
-      .map(async (file) => {
-        const relativePath = path.relative(buildDir, file).replace(/\\/g, '/');
-        const url = relativePath === 'index.html' ? '' : relativePath.replace(/\.html$/, '');
+      .filter(file => !path.basename(file).startsWith('404'))
+      .map(async file => {
+        const relativePath = path
+          .relative(buildDir, file)
+          .replace(/\\/g, '/');
+        const url =
+          relativePath === 'index.html'
+            ? ''
+            : relativePath.replace(/\.html$/, '');
         const isIndex = relativePath === 'index.html';
         const stat = await fs.stat(file);
         const lastmod = stat.mtime.toISOString().split('T')[0];
@@ -30,7 +37,7 @@ export const sitemap = async () => {
     <changefreq>${isIndex ? 'weekly' : 'monthly'}</changefreq>
     <priority>${isIndex ? '1.0' : '0.8'}</priority>
   </url>`;
-      })
+      }),
   );
 
   const content = `<?xml version="1.0" encoding="UTF-8"?>
@@ -55,6 +62,10 @@ export const robots = async () => {
     lines.push('', `Sitemap: ${config.server.hostname}/sitemap.xml`);
   }
 
-  await fs.writeFile(path.join(paths.build, 'robots.txt'), `${lines.join('\n')}\n`, 'utf-8');
+  await fs.writeFile(
+    path.join(paths.build, 'robots.txt'),
+    `${lines.join('\n')}\n`,
+    'utf-8',
+  );
   logSuccess('robots.txt generated');
 };

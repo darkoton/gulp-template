@@ -6,31 +6,40 @@ function dynamicAdaptive() {
   DynamicAdapt.prototype.init = function () {
     const _this = this;
     this.оbjects = [];
-    this.daClassname = "_dynamic_adapt_";
-    this.nodes = document.querySelectorAll("[data-da]");
+    this.daClassname = '_dynamic_adapt_';
+    this.nodes = document.querySelectorAll('[data-da]');
 
     for (let i = 0; i < this.nodes.length; i++) {
       const node = this.nodes[i];
       const data = node.dataset.da.trim();
-      const dataArray = data.split(",");
+      const dataArray = data.split(',');
       const оbject = {};
       оbject.element = node;
       оbject.parent = node.parentNode;
       оbject.destination = document.querySelector(dataArray[0].trim());
-      оbject.breakpoint = dataArray[1] ? dataArray[1].trim() : "767";
-      оbject.place = dataArray[2] ? dataArray[2].trim() : "last";
+      оbject.breakpoint = dataArray[1] ? dataArray[1].trim() : '767';
+      оbject.place = dataArray[2] ? dataArray[2].trim() : 'last';
       оbject.index = this.indexInParent(оbject.parent, оbject.element);
       this.оbjects.push(оbject);
     }
 
     this.arraySort(this.оbjects);
 
-    this.mediaQueries = Array.prototype.map.call(this.оbjects, function (item) {
-      return '(' + this.type + "-width: " + item.breakpoint + "px)," + item.breakpoint;
-    }, this);
-    this.mediaQueries = Array.prototype.filter.call(this.mediaQueries, function (item, index, self) {
-      return Array.prototype.indexOf.call(self, item) === index;
-    });
+    this.mediaQueries = Array.prototype.map.call(
+      this.оbjects,
+      function (item) {
+        return `(${this.type}-width: ${item.breakpoint}px),${
+          item.breakpoint
+        }`;
+      },
+      this,
+    );
+    this.mediaQueries = Array.prototype.filter.call(
+      this.mediaQueries,
+      (item, index, self) => {
+        return Array.prototype.indexOf.call(self, item) === index;
+      },
+    );
 
     for (let i = 0; i < this.mediaQueries.length; i++) {
       const media = this.mediaQueries[i];
@@ -38,10 +47,13 @@ function dynamicAdaptive() {
       const matchMedia = window.matchMedia(mediaSplit[0]);
       const mediaBreakpoint = mediaSplit[1];
 
-      const оbjectsFilter = Array.prototype.filter.call(this.оbjects, function (item) {
-        return item.breakpoint === mediaBreakpoint;
-      });
-      matchMedia.addListener(function () {
+      const оbjectsFilter = Array.prototype.filter.call(
+        this.оbjects,
+        item => {
+          return item.breakpoint === mediaBreakpoint;
+        },
+      );
+      matchMedia.addListener(() => {
         _this.mediaHandler(matchMedia, оbjectsFilter);
       });
       this.mediaHandler(matchMedia, оbjectsFilter);
@@ -75,8 +87,11 @@ function dynamicAdaptive() {
       destination.insertAdjacentElement('afterbegin', element);
       return;
     }
-    destination.children[place].insertAdjacentElement('beforebegin', element);
-  }
+    destination.children[place].insertAdjacentElement(
+      'beforebegin',
+      element,
+    );
+  };
 
   DynamicAdapt.prototype.moveBack = function (parent, element, index) {
     element.classList.remove(this.daClassname);
@@ -85,7 +100,7 @@ function dynamicAdaptive() {
     } else {
       parent.insertAdjacentElement('beforeend', element);
     }
-  }
+  };
 
   DynamicAdapt.prototype.indexInParent = function (parent, element) {
     const array = Array.prototype.slice.call(parent.children);
@@ -93,18 +108,18 @@ function dynamicAdaptive() {
   };
 
   DynamicAdapt.prototype.arraySort = function (arr) {
-    if (this.type === "min") {
-      Array.prototype.sort.call(arr, function (a, b) {
+    if (this.type === 'min') {
+      Array.prototype.sort.call(arr, (a, b) => {
         if (a.breakpoint === b.breakpoint) {
           if (a.place === b.place) {
             return 0;
           }
 
-          if (a.place === "first" || b.place === "last") {
+          if (a.place === 'first' || b.place === 'last') {
             return -1;
           }
 
-          if (a.place === "last" || b.place === "first") {
+          if (a.place === 'last' || b.place === 'first') {
             return 1;
           }
 
@@ -114,17 +129,17 @@ function dynamicAdaptive() {
         return a.breakpoint - b.breakpoint;
       });
     } else {
-      Array.prototype.sort.call(arr, function (a, b) {
+      Array.prototype.sort.call(arr, (a, b) => {
         if (a.breakpoint === b.breakpoint) {
           if (a.place === b.place) {
             return 0;
           }
 
-          if (a.place === "first" || b.place === "last") {
+          if (a.place === 'first' || b.place === 'last') {
             return 1;
           }
 
-          if (a.place === "last" || b.place === "first") {
+          if (a.place === 'last' || b.place === 'first') {
             return -1;
           }
 
@@ -137,8 +152,7 @@ function dynamicAdaptive() {
     }
   };
 
-  const da = new DynamicAdapt("max");
+  const da = new DynamicAdapt('max');
   da.init();
-
 }
-dynamicAdaptive()
+dynamicAdaptive();

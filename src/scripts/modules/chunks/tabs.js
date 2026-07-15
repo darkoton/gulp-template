@@ -1,7 +1,15 @@
-export const tabs = ({ tabSelector, tabResultSelector, tabClassesActive = [], tabClassesNoActive = [], resultClassesActive = [], resultClassesNoActive = [] }) => {
-  let nav = document.querySelectorAll(tabSelector),
-    result = document.querySelectorAll(tabResultSelector),
-    tabName;
+export const tabs = ({
+  tabSelector,
+  tabResultSelector,
+  tabClassesActive = [],
+  tabClassesNoActive = [],
+  resultClassesActive = [],
+  resultClassesNoActive = [],
+}) => {
+  const nav = document.querySelectorAll(tabSelector),
+    result = document.querySelectorAll(tabResultSelector);
+
+  let tabName;
 
   nav.forEach(item => {
     item.addEventListener('click', selectnav);

@@ -18,7 +18,7 @@ function scrollToBock(id, anchor) {
     return;
   }
 
-  let section = document.querySelector(id);
+  const section = document.querySelector(id);
 
   if (section) {
     window.history.pushState(null, null, id);
@@ -39,7 +39,10 @@ function scrollToBock(id, anchor) {
 }
 
 function scrollToBlockOnload() {
-  scrollToBock(location.hash, document.querySelector(`[href="${location.hash}"]`));
+  scrollToBock(
+    location.hash,
+    document.querySelector(`[href="${location.hash}"]`),
+  );
 }
 
 window.onload = () => {

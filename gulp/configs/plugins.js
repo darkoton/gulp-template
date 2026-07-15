@@ -4,8 +4,8 @@ import browsersync from 'browser-sync';
 import newer from 'gulp-newer';
 
 export const plugins = {
-  plumber: plumber,
-  notify: notify,
-  browsersync: browsersync,
-  newer: newer,
+  plumber,
+  notify,
+  browsersync,
+  newer,
 };

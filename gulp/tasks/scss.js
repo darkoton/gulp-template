@@ -1,7 +1,6 @@
 import * as dartSass from 'sass';
 import gulpSass from 'gulp-sass';
-import groupCssMediaQueries from 'gulp-group-css-media-queries'; // групировка медиа запросов
-import gulpIf from 'gulp-if';
+import groupCssMediaQueries from 'gulp-group-css-media-queries';
 import sassGlob from 'gulp-sass-glob-use-forward';
 
 const sass = gulpSass(dartSass);

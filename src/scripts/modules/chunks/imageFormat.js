@@ -1,13 +1,13 @@
-// Проверка поддержки формата изображений
+// Checking image format support
 function testImageFormat(format, data, callback) {
-  let img = new Image();
+  const img = new Image();
   img.onload = img.onerror = () => {
     callback(img.height === 2);
   };
   img.src = data;
 }
 
-// Проверка AVIF
+// Checking AVIF support
 function isAvif() {
   testImageFormat(
     'avif',
@@ -20,7 +20,7 @@ function isAvif() {
   );
 }
 
-// Проверка WebP
+// Checking WebP support
 function isWebp() {
   testImageFormat(
     'webp',

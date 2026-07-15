@@ -1,7 +1,7 @@
 function scrollHeader() {
   const header = document.querySelector('.header');
 
-  const callback = function (entries, observer) {
+  const callback = function (entries) {
     if (entries[0].isIntersecting) {
       header.classList.remove('_scroll');
     } else {

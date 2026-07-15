@@ -27,6 +27,7 @@
     height: 100px;
     width: 100px;
     column-gap: 10px;
+
     span {
       height: 100%;
       width: 100%;
@@ -35,18 +36,22 @@
       &:first-child {
         animation: fade 0.7s ease 0s infinite alternate both;
       }
+
       &:nth-child(2) {
         animation: fade 0.7s ease 0.3s infinite alternate both;
       }
+
       &:last-child {
         animation: fade 0.7s ease 0.6s infinite alternate both;
       }
     }
   }
+
   @keyframes fade {
     from {
       height: 30%;
     }
+
     to {
       height: 100%;
     }

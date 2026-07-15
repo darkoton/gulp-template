@@ -1,1 +1,1 @@
-export const noop = (done) => done();
+export const noop = done => done();
