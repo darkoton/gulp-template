@@ -32,7 +32,7 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Build project
-        run: pnpm run build-min
+        run: pnpm run build:prod
 
       - name: Prepare Vercel Output Format
         run: |
