@@ -1,6 +1,6 @@
-allowBuilds:
-  '@parcel/watcher': false
-  es5-ext: false
-  esbuild: false
-  sharp: false
-  ttf2woff2: false
+ignoredBuiltDependencies:
+  - '@parcel/watcher'
+  - es5-ext
+  - esbuild
+  - sharp
+  - ttf2woff2
