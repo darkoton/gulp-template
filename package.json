@@ -8,7 +8,7 @@
     "dev": "cross-env NODE_OPTIONS=--no-deprecation NODE_ENV=development gulp dev",
     "build:dev": "cross-env NODE_OPTIONS=--no-deprecation NODE_ENV=production gulp build",
     "build:prod": "cross-env NODE_OPTIONS=--no-deprecation NODE_ENV=production gulp build-min",
-    "tailwind:setup": "node .template/setup/tailwind/setup.js",
+    "tailwind:setup": "npx template-add tailwind",
     "preview": "pnpm build:prod && gulp start",
     "lint": "eslint . && stylelint \"src/**/*.{css,scss}\"",
     "lint:fix": "eslint . --fix && stylelint \"src/**/*.{css,scss}\" --fix",
@@ -59,7 +59,6 @@
     "sass": "^1.100.0",
     "sharp": "^0.33.0",
     "stylelint": "^17.0.0",
-    "stylelint-config-standard-scss": "^17.0.0",
-    "tailwindcss": "3.4.17"
+    "stylelint-config-standard-scss": "^17.0.0"
   }
 }

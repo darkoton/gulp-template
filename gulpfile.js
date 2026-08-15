@@ -41,6 +41,7 @@ import { sprite } from './gulp/tasks/sprite.js';
 import { logBuildStart, logBuildEnd } from './gulp/utils/index.js';
 import { createUnlinkHandler } from './gulp/utils/watcher.js';
 import { sitemap, robots } from './gulp/tasks/optimize.js';
+import { packageBuild } from './gulp/tasks/package.js';
 
 // ─────────────────────────────────────────────────────────────
 // Watch
@@ -111,6 +112,7 @@ const buildTasks = gulp.parallel(
   images,
   sprite,
   buildJS,
+  packageBuild,
 );
 
 const dev = gulp.series(
