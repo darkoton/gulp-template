@@ -2,22 +2,24 @@
 <html lang="en">
   <head>
     <!-- prettier-ignore -->
-    @@include("../layouts/head.html", { 
-      "title": "Gulp-template", 
-      "description": "Modern Gulp boilerplate for fast frontend development with SCSS, image optimization, and multi-page builds.", "image": "./assets/img/preview.webp" 
+    @@include("../layouts/_head.html", {
+      "title": "Gulp-template",
+      "description": "Modern Gulp boilerplate for fast frontend development with SCSS, image optimization, and multi-page builds.", "image": "./assets/img/preview.webp"
     })
     <link rel="stylesheet" href="./styles/home.css" />
   </head>
 
   <body>
-    <!-- @@include("../components/preloader.html") -->
+    <!-- @@include("../components/_preloader.html") -->
 
     <div class="wrapper">
       <div class="content">
-        @@include("../layouts/header.html")
-        <main class="page"></main>
+        @@include("../layouts/_header.html")
+        <main class="page">
+          @@include("../components/home/_hero.html")
+        </main>
       </div>
-      @@include("../layouts/footer.html")
+      @@include("../layouts/_footer.html")
     </div>
     <script src="scripts/ui.js" type="module"></script>
     <script src="scripts/app.js" type="module"></script>
