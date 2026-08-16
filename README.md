@@ -29,17 +29,17 @@ pnpm install
 
 ## Scripts
 
-| Command | Description |
-| --- | --- |
-| `pnpm dev` | Starts the dev server with watch mode and BrowserSync (`NODE_ENV=development`) |
-| `pnpm build:dev` | Builds to `dist/` without minification, but with production environment settings (`NODE_ENV=production`) |
-| `pnpm build:prod` | Full production build: HTML/CSS/JS/image minification + sitemap/robots + ZIP archive |
-| `pnpm preview` | Production build + local server (`gulp start`) to preview `dist/` |
-| `pnpm tailwind:setup` | Adds Tailwind CSS integration to the project (`@darkoto/gulp-template-cli`) |
-| `pnpm lint` | Runs ESLint + Stylelint checks |
-| `pnpm lint:fix` | Auto-fixes ESLint + Stylelint issues |
-| `pnpm format` | Formats the whole project with Prettier |
-| `pnpm clean` | Removes `dist/` and `node_modules/` |
+| Command               | Description                                                                                              |
+| --------------------- | -------------------------------------------------------------------------------------------------------- |
+| `pnpm dev`            | Starts the dev server with watch mode and BrowserSync (`NODE_ENV=development`)                           |
+| `pnpm build:dev`      | Builds to `dist/` without minification, but with production environment settings (`NODE_ENV=production`) |
+| `pnpm build:prod`     | Full production build: HTML/CSS/JS/image minification + sitemap/robots + ZIP archive                     |
+| `pnpm preview`        | Production build + local server (`gulp start`) to preview `dist/`                                        |
+| `pnpm tailwind:setup` | Adds Tailwind CSS integration to the project (`@darkoto/gulp-template-cli`)                              |
+| `pnpm lint`           | Runs ESLint + Stylelint checks                                                                           |
+| `pnpm lint:fix`       | Auto-fixes ESLint + Stylelint issues                                                                     |
+| `pnpm format`         | Formats the whole project with Prettier                                                                  |
+| `pnpm clean`          | Removes `dist/` and `node_modules/`                                                                      |
 
 ## Project Structure
 
@@ -87,25 +87,25 @@ All project settings live in a single file:
 ```js
 export const projectConfig = {
   server: {
-    port: 3000,           // BrowserSync port (or PORT from .env)
-    hostname: '...',      // SITE_URL from .env
-    open: false,           // open browser on pnpm dev
+    port: 3000, // BrowserSync port (or PORT from .env)
+    hostname: '...', // SITE_URL from .env
+    open: false, // open browser on pnpm dev
   },
   images: {
     webp: { enabled: true, quality: 80 },
     avif: { enabled: false, quality: 80 },
     jpeg: { quality: 80, progressive: true },
-    png:  { compressionLevel: 9 },
+    png: { compressionLevel: 9 },
   },
   scripts: {
-    type: 'modules',       // 'modules' | 'scripts' (single IIFE bundle)
+    type: 'modules', // 'modules' | 'scripts' (single IIFE bundle)
   },
-  favicons: { /* appName, appShortName, developerName, background, etc. */ },
+  favicons: {/* appName, appShortName, developerName, background, etc. */},
   optimization: {
     minify: { html: isProd, css: isProd, js: isProd, images: isProd },
-    criticalCSS: false,    // whether to include src/styles/critical.scss in the build
-    sitemap: false,        // generate sitemap.xml
-    robots: false,         // generate robots.txt
+    criticalCSS: false, // whether to include src/styles/critical.scss in the build
+    sitemap: false, // generate sitemap.xml
+    robots: false, // generate robots.txt
   },
   sprites: {
     enabled: true,
@@ -157,6 +157,18 @@ Based on `src/assets/favicons/favicon.png`, a full favicon set plus the correspo
 - `sitemap.xml` and `robots.txt` are generated from the HTML files in `dist/` (enabled via the `optimization.sitemap` / `optimization.robots` flags).
 - After `build`/`build-min`, the contents of `dist/` are packaged into `<project-folder-name>.zip` in the project root.
 - For `scripts.type = 'modules'`, a `package.json` and `README.md` are generated inside `dist/` with an `npm run serve` command (powered by Vite) for previewing the finished build locally.
+
+## Creating a New Project From This Template
+
+To scaffold a fresh project folder from this template (files only, no git history) using [`degit`](https://github.com/Rich-Harris/degit):
+
+```bash
+npx degit darkoton/gulp-template my-new-project
+cd my-new-project
+pnpm install
+```
+
+This downloads a clean copy of the repository — no `.git` folder, no commit history — ready to be turned into its own project.
 
 ## Quick Start
 
