@@ -102,7 +102,7 @@ const minTasks = gulp.parallel(minHTML, minCSS, minJS, minImg);
 
 const seoTasks = gulp.series(sitemap, robots);
 
-const optimizeTasks = gulp.series(minTasks, seoTasks);
+const optimizeTasks = gulp.series(minTasks);
 
 const buildTasks = gulp.parallel(
   fonts,
@@ -112,6 +112,7 @@ const buildTasks = gulp.parallel(
   images,
   sprite,
   buildJS,
+  seoTasks,
   packageBuild,
 );
 
