@@ -96,7 +96,15 @@ function watcher() {
 
 const fonts = gulp.series(otfToTtf, ttfToWoff, iconfonts);
 
-const mainTasks = gulp.parallel(assets, html, scss, js, images, sprite);
+const mainTasks = gulp.parallel(
+  assets,
+  html,
+  scss,
+  js,
+  images,
+  sprite,
+  //etc.
+);
 
 const minTasks = gulp.parallel(minHTML, minCSS, minJS, minImg);
 
@@ -114,6 +122,7 @@ const buildTasks = gulp.parallel(
   buildJS,
   seoTasks,
   packageBuild,
+  // etc.
 );
 
 const dev = gulp.series(
