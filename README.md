@@ -21,11 +21,39 @@ A **Gulp 4** build for fast static site development: HTML includes, SCSS, ES mod
 - Node.js 18+ (20+ recommended)
 - [pnpm](https://pnpm.io/) (the primary package manager, see `pnpm-lock.yaml` / `pnpm-workspace.yaml`)
 
-## Installation
+## Creating a New Project From This Template
+
+To scaffold a fresh project folder from this template (files only, no git history) using [`degit`](https://github.com/Rich-Harris/degit):
+
+```bash
+npx degit darkoton/gulp-template my-new-project
+cd my-new-project
+pnpm install
+```
+
+This downloads a clean copy of the repository — no `.git` folder, no commit history — ready to be turned into its own project.
+
+## Quick Start
 
 ```bash
 pnpm install
+pnpm dev
 ```
+
+The dev server starts on the port from `.env.development` (default `http://localhost:3000`) with automatic reload on changes in `src/`.
+
+For a production build:
+
+```bash
+pnpm build:prod
+```
+
+The result will appear in `dist/` and as a `<folder-name>.zip` archive in the project root.
+
+## Deployment
+
+The repository includes a `vercel.json` configured to serve the contents of `dist/` as a static site on [Vercel](https://vercel.com/).
+
 
 ## Scripts
 
@@ -157,36 +185,3 @@ Based on `src/assets/favicons/favicon.png`, a full favicon set plus the correspo
 - `sitemap.xml` and `robots.txt` are generated from the HTML files in `dist/` (enabled via the `optimization.sitemap` / `optimization.robots` flags).
 - After `build`/`build-min`, the contents of `dist/` are packaged into `<project-folder-name>.zip` in the project root.
 - For `scripts.type = 'modules'`, a `package.json` and `README.md` are generated inside `dist/` with an `npm run serve` command (powered by Vite) for previewing the finished build locally.
-
-## Creating a New Project From This Template
-
-To scaffold a fresh project folder from this template (files only, no git history) using [`degit`](https://github.com/Rich-Harris/degit):
-
-```bash
-npx degit darkoton/gulp-template my-new-project
-cd my-new-project
-pnpm install
-```
-
-This downloads a clean copy of the repository — no `.git` folder, no commit history — ready to be turned into its own project.
-
-## Quick Start
-
-```bash
-pnpm install
-pnpm dev
-```
-
-The dev server starts on the port from `.env.development` (default `http://localhost:3000`) with automatic reload on changes in `src/`.
-
-For a production build:
-
-```bash
-pnpm build:prod
-```
-
-The result will appear in `dist/` and as a `<folder-name>.zip` archive in the project root.
-
-## Deployment
-
-The repository includes a `vercel.json` configured to serve the contents of `dist/` as a static site on [Vercel](https://vercel.com/).
